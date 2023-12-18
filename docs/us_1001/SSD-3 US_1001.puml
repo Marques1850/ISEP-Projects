@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to list User in the system Request
+activate ":System"
+":System" --> Man : asks for a confirmation
+deactivate ":System"
+
+Man----> ":System" : confirms
+
+activate ":System"
+":System"-->Man : shows all users present in the system \n and informs list user's in the system operation success
+deactivate ":System"
+
+
+deactivate Man
+@enduml

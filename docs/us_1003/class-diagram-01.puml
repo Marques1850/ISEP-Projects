@@ -1,0 +1,78 @@
+@startuml
+
+class eCourseSystemUser {
+    * EmailAdderess email
+    * UserStatus status
+    * List<Course> coursesTeaching
+    * List<Course> coursesTeached
+    * Acronym acronym
+    * NIF nif
+    * BirthDate birthDate
+    * Grade grade
+    * int mecanographicNumber
+    * SystemUser systemUser
+    + eCourseSystemUser(String: name, String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + eCourseSystemUser(String: name, boolean: regent, String: acronym, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n Role: role, Email: email, Password, password, boolean: status)
+    + Student(String: name, int: mecanographicNumber, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n  Role: role, Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+class Course {
+    * int id
+    * name
+    * CourseStatus status
+    * Code code
+    * Teacher regent
+    + Course(int id, String name, CourseStatus status, Code code, Teacher regent)
+}
+
+class CourseRepository {
+    + addCourse(course: course)
+    + removeCourse(course: course)
+    + verifyCourse(course: course): boolean
+    + Course(int: id, String: name, CourseStatus: status, Code: code, Teacher: regent)
+}
+
+class OpenCloseEnrollmentUI {
+    + verifyCourseExists(code) : CourseDto
+    + enableenrollments(code) : boolean
+    + disableenrollments(code) : boolean
+    + saveSatusChange(CourseDto) : CourseDto
+}
+
+class OpenCloseEnrollmentController {
+    + verifyCourseExists(code) : boolean
+    + VerifyCourseIsActive(code) : CourseDto
+    + enableenrollments(code) : boolean
+    + disableenrollments(code) : boolean
+    + add(Course)
+}
+
+class CourseStatus <<enumeration>> {
+    + OPEN
+    + OPEN_ENROLLMENT
+    + CLOSED_ENROLLMENT
+    + CLOSED
+}
+
+class RepositoryFactory {
+
+}
+
+
+
+'Relationships
+
+Course -- CourseRepository
+Course-left- CourseStatus
+
+eCourseSystemUser .. OpenCloseEnrollmentUI
+OpenCloseEnrollmentUI .right. OpenCloseEnrollmentController
+OpenCloseEnrollmentController .. CourseRepository
+OpenCloseEnrollmentController .. Course
+OpenCloseEnrollmentController .. RepositoryFactory
+RepositoryFactory ..> CourseRepository
+CourseRepository ..> CourseStatus
+
+
+@enduml

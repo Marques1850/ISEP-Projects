@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to change courses status
+activate ":System"
+":System" --> Man : asks for specific courses
+deactivate ":System"
+
+Man --> ":System" : Selects courses
+
+activate ":System"
+":System"--> Man :Shows current courses's Status
+deactivate ":System"
+
+Man--> ":System" : chooses status  change
+
+activate ":System"
+":System"-->Man : checks restriction verification
+deactivate ":System"
+Man --> ":System" : confirms
+
+activate ":System"
+":System"--> Man :informs of course status change
+deactivate ":System"
+
+deactivate Man
+@enduml

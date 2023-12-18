@@ -1,0 +1,128 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as Usr
+
+participant ":UndoLastChangePostItUI" as UI
+participant ":ChangePostItController" as Con2
+participant ":UndoLastChangePostItController" as Con
+participant ":AuthorizationService" as AUTHZ <<service>>
+
+participant ":UserAccessBoardsService" as UABS <<service>>
+participant ":UndoLastChangePostItService" as SRV <<service>>
+
+participant "board: Board" as SB
+participant "postIt: PostIt" as PI
+participant ":Content" as CNT
+database "repoBoard :BoardRepository" as repo <<repository>>
+database BoardChangesRepository as repo2 <<repository>>
+participant "event :BoardChangedEvent" as EVENT <<event>>
+participant ":EventPublisher" as EP <<publisher>>
+participant ":PostItMapper" as MAP <<mapper>>
+
+
+
+
+Usr -> UI : option to undo last change in post-it
+activate Usr
+activate UI
+
+UI-> Con2: getUserBoards()
+activate Con2
+
+
+Con2 -> UABS : getUserBoards()
+
+activate UABS
+UABS -> repo : findBoardsOfUser(sessionEmail, theRepository, theUserRepository)
+activate repo
+repo -> repo : findBoeardsHiOwn()
+repo --> UABS : onwendBoards
+
+
+repo -> repo : findBoeardsHiShared()
+repo --> UABS : sharedBoards
+deactivate repo
+
+UABS-->Con2: boardsDto
+deactivate UABS
+
+Con2 --> UI : boardsDto
+deactivate Con2
+
+
+UI -> UI :displayBoards( boardsDto )
+UI--> Usr : asks to select board
+deactivate UI
+
+Usr -> UI : selects a board
+activate UI
+
+UI -> Con2: getBoard(boardId)
+activate Con2
+Con2 -> repo : board = getBoard(boardId)
+
+activate repo
+repo -> repo : findBoardById(boardId)
+repo --> Con2 : board
+deactivate repo
+Con2 --> UI : board
+deactivate Con2
+
+UI -> UI : displayPostIts( board )
+UI --> Usr : asks for the post-it information (Row, Column)
+deactivate UI
+
+Usr -> UI: enters the post-it information (Row, Column)
+activate UI
+UI -> Con: undoLastChangePostIt( board, row, column )
+activate Con
+Con -> AUTHZ : session( )
+activate AUTHZ
+AUTHZ --> Con : sessionEmail
+deactivate AUTHZ
+
+Con -> SRV: undoLastChangePostIt( board, row, column, sessionEmail )
+activate SRV
+
+SRV -> SRV : undoLastChangePostItSync( board, row, column )
+activate SRV
+SRV -> repo : findByCode( boardId )
+activate repo
+repo --> SRV : board
+deactivate repo
+SRV -> repo2 : getBoardPreviousContent( board )
+activate repo2
+repo2 --> SRV : content
+deactivate repo2
+
+SRV -> SB : updateCell( content, row, column, repoBoard )
+activate SB
+deactivate SB
+SRV -> repo : save( board )
+activate repo
+deactivate repo
+SRV--> SRV : board
+deactivate SRV
+
+SRV -> EVENT** : create( board, time , boardChange, content )
+SRV -> EP : publish( event )
+activate EP
+deactivate EP
+
+SRV -> MAP : toDTO( board.GetPostIt(row, column) )
+activate MAP
+MAP -> SRV : postitDto
+deactivate MAP
+SRV --> Con: postitDto
+deactivate SRV
+Con --> UI: postitDto
+deactivate Con
+UI --> Usr: shows post-it information
+deactivate UI
+
+
+
+@enduml

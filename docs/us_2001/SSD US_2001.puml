@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Teacher
+
+activate Teacher
+
+Teacher -> ":System": asks to create a new exam
+
+activate ":System"
+":System" --> Teacher: asks for the exam code, title, coursecode, open \n and close date and the txt exam file
+deactivate ":System"
+
+Teacher -> ":System": provides the exam code, title, coursecode, open \n and close date and the txt exam file
+
+activate ":System"
+":System" --> Teacher: verify the exam and confirms the exam creation
+deactivate ":System"
+
+deactivate Teacher
+
+@enduml

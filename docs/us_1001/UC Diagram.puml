@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+actor Manager
+actor Teacher
+actor Student
+
+Manager -- (Register users)
+Manager -- (Disable/Enable users)
+Manager -- (List users)
+
+(Register users) ..> (Teacher) : <<extends>>
+(Register users) ..> (Student) : <<extends>>
+(Register users) ..> (Manager) : <<extends>>
+(Disable/Enable users) ..> (Teacher) : <<extends>>
+(Disable/Enable users) ..> (Student) : <<extends>>
+(Disable/Enable users) ..> (Manager) : <<extends>>
+(List users) ..> (Teacher) : <<extends>>
+(List users) ..> (Student) : <<extends>>
+(List users) ..> (Manager) : <<extends>>
+
+@enduml

@@ -1,0 +1,36 @@
+CG-Text
+Header Description: teste perguntas gerais
+Final Grade: 00.00
+17/05/2023
+Section: 1
+Section Description: Mundo
+Question: 1
+Question Cotation: (4.00)
+Multiple Choice: Qual é o maior pais do mundo?
+Option: * China
+Option: Russia
+Option: Brasil
+Option: Estados Unidos
+Question: 2
+Question Cotation: (5.00)
+Missing Word Answer: Portugal é um país da [Europa] Ocidental.
+Section: 2
+Section Description: America
+Question: 1
+Question Cotation: (3.00)
+Short Answer: Qual é o maior pais da America do Sul? [Brasil]
+Question: 2
+Question Cotation: (3.00)
+True or False:
+* Portugal é um pais da Europa?
+A China é um pais da America?
+Question: 3
+Question Cotation: (1.00)
+Numerical Answer: 5 + 5 = [10, 2]
+Question: 4
+Question Cotation: (4.00)
+Matching Answer:
+America [Washington]
+California [Silicon Valley]
+Florida [Miami]
+Texas [Dallas]

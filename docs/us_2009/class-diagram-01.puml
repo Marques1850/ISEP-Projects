@@ -1,0 +1,171 @@
+@startuml
+
+top to bottom direction
+
+class TakeFormativeExamUI {
+    + doShow()
+    + showExams(final List<FormativeExamDto> exams)
+    + buildExamsMenu(final List<FormativeExamDto> exams) : Menu
+    + headline() : String
+}
+
+class TakeFormativeExamController {
+    * AuthorizationService authz
+    * eCourseUserRepository repo
+    * ExamRepository repoE
+    * TakeExamService service
+    + getTakeableExams() : List<FormativeExamDto>
+    + getUser() : SystemUser
+    + takeExam(String examCode)
+}
+
+class SystemUser <<root>> <<Entity>> {
+    * Name
+    * Username
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+
+}
+
+class EmailAdderss <<Value object>>
+
+class Role <<Entity>> {
+    * String name
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+class Password <<value object>>
+
+class Acronym <<value object>>
+
+class NIF <<value object>>
+
+class BirthDate <<value object>>
+
+class MechanographicNumber <<value object>> <<automatically generated>>
+
+class Grade <<value object>>
+
+class Course {
+    * int id
+    * name
+    * CourseStatus status
+    * Code code
+    * Teacher regent
+    + Course(int id, String name, CourseStatus status, Code code, Teacher regent)
+}
+
+class FormativeExam <<root>> <<event>> {
+    * title <<unique>>
+    * courseCode
+}
+
+class ExamGrade <<value object>> {
+    * int grade
+    * eCourseSystemUser student
+}
+
+class RepositoryFactory {
+
+}
+
+class UserRepository {
+    + addUser(user: user)
+    + removeUser(user: user)
+    + CreateUser(String: fullName, String: fhortName, \n  Role: role, Email: email, Password, password)
+    + searchUser(user: user): User
+    + alterUserStatus(User: user)
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class FormativeExamRepository {
+    + addExam(FormativeExam: Exam)
+    + removeExam(FormativeExam: Exam)
+    + searchExam(FormativeExam: Exam): Exam
+    + totalNumberOfExams(): int
+}
+
+class FormativeExamDto {
+     * code
+     * CourseCode
+     + FormativeExamDto(String code, String name, String description, String courseCode, String openDate, String closeDate)
+     + FormativeExamDto toDto(exam)
+     + toString()
+}
+
+class TakeFormativeExamService <<service>> {
+    * ListExamCoursesService listExamCoursesService
+    * eCourseSystemUser fuser
+    + getFormativeExams(SystemUser user, FormativeExamRepository repoE, eCourseUserRepository repo) : List<FormativeExam>
+    + findUser(SystemUser user, eCourseUserRepository repo ) : eCourseSystemUser
+    + getStudentCourses(eCourseSystemUser user) : List<Course>
+    + takeExam(exam)
+
+}
+
+class ListFormativeExamCoursesService {
+    + getFutureFormativeExams(List<Course> courses,FormativeExamRepository repo) : List<Exam>
+    + getTakeableFormativeExams(List<Course> courses, FormativeExamRepository repoE) : List<Exam>
+}
+
+class FormativeEValListener {
+}
+
+
+
+'Relationships
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+
+eCourseSystemUser --> TakeFormativeExamService : use >
+eCourseSystemUser --> ListFormativeExamCoursesService : use >
+
+eCourseSystemUser "*" -- "*" FormativeExam : take a >
+
+
+Course --> "1" CourseStatus
+Course --> "1" CourseCode
+
+Course "1" -- "1" Grade : refers to <
+
+Course "*" - "*" eCourseSystemUser : is in a <
+
+FormativeExam "1" -- "1" ExamGrade : has >
+FormativeExam "*" -- "1" CourseCode : has >
+ExamGrade "1" -- "1" eCourseSystemUser : has >
+
+eCourseSystemUser .. TakeFormativeExamUI
+TakeFormativeExamUI .. TakeFormativeExamController
+TakeFormativeExamController .. RepositoryFactory
+TakeFormativeExamController .. FormativeExamRepository
+TakeFormativeExamController .. UserRepository
+TakeFormativeExamController .. TakeFormativeExamService
+TakeFormativeExamController .. FormativeExam
+TakeFormativeExamController .. eCourseSystemUser
+TakeFormativeExamController .. Course
+TakeFormativeExamController .. FormativeExamDto
+TakeFormativeExamService .. ListFormativeExamCoursesService
+TakeFormativeExamService .. FormativeEValListener
+FormativeEValListener .. TakeFormativeExamUI
+
+
+
+
+@enduml

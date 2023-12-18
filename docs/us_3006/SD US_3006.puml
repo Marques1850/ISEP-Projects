@@ -1,0 +1,148 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as Usr
+
+participant ":CreatePostItUI" as UI
+participant ":SharedBoardServer" as SBS
+participant ":CreatePostItController" as Con
+database BoardRepsitory as Us <<repository>>
+participant ":AuthorizationService" as AUTHZ <<service>>
+
+
+participant ":UserAccessBoardsService" as UABS <<service>>
+database RepositoryFactory as FAR <<repository>>
+database UserRepository as USR <<repository>>
+participant ":CreatePostItService" as CIS <<service>>
+participant ":PostIt" as PI
+
+participant ":ShareBoard" as SB
+database BoardRepsitory as Us <<repository>>
+participant ":EventPublisher" as EP <<publisher>>
+participant ":PostItMapper" as MAP <<mapper>>
+
+
+
+Usr -> UI : Starts creating a Post-It
+activate Usr
+activate UI
+
+UI -> SBS : createPostIt()
+activate SBS
+SBS -> SBS : getInstace()
+SBS --> UI : CreatePostItController()
+deactivate SBS
+
+UI-> Con: getUserBoards()
+activate Con
+
+Con -> FAR
+
+Con -> AUTHZ : session( )
+activate AUTHZ
+AUTHZ --> Con : sessionEmail
+deactivate AUTHZ
+
+Con -> UABS : findBoardsOfUserWrite(sessionEmail, theRepository, theUserRepository)
+
+activate UABS
+UABS -> USR : user = searchUser(email)
+
+activate USR
+
+USR -> USR : searchUser(email)
+
+USR --> UABS : user
+deactivate USR
+
+UABS -> Us :
+activate Us
+Us -> Us : getallOwned(user)
+Us --> UABS : onwendBoards
+
+
+Us -> Us : findBoardsSharedWrite(user)
+Us --> UABS : sharedBoards
+deactivate Us
+
+UABS-->Con: boards
+deactivate UABS
+
+Con --> UI : boards
+deactivate Con
+
+
+
+UI--> Usr : print the boards that the user owns and/or the ones that he shares
+deactivate UI
+
+Usr -> UI : selects a board
+activate UI
+
+UI --> Usr : asks for the post-it information (Row, Column and Content)
+deactivate UI
+
+Usr -> UI : fills the post-it information
+activate UI
+
+
+UI -> Con: pst = createPostIt(postItRow, postItColumn, postItContent, selectedBoard)
+
+activate Con
+
+Con -> AUTHZ : session( )
+activate AUTHZ
+AUTHZ --> Con : sessionEmail
+deactivate AUTHZ
+
+Con -> USR : searchUser(sessionEmail)
+activate USR
+USR -> USR : searchUser(userEmail)
+USR --> Con : user
+deactivate USR
+
+Con -> CIS : createPostIt(postItRow, postItColumn, postItContent, boardId, user)
+activate CIS
+CIS -> CIS : createPostItSync(boardId, Integer.parseInt(postItRow), Integer.parseInt(postItColumn), postItContent, user)
+CIS -> Us : findByCode(Long.parseLong(boardId))
+
+activate Us
+Us -> Us : findByCode(Long.parseLong(boardId))
+Us --> CIS : board
+deactivate Us
+
+CIS -> PI** : postIt = createPostIt()
+CIS -> SB : addCell(postIt)
+activate SB
+deactivate SB
+
+CIS -> Us : save(postIt)
+activate Us
+Us -> Us : save(postIt)
+Us --> CIS : postIt
+deactivate Us
+
+CIS -> EP : publish( event )
+activate EP
+deactivate EP
+
+CIS -> MAP : toDTO( board.GetPostIt(row, column) )
+activate MAP
+MAP --> CIS : postitDto
+deactivate MAP
+
+CIS --> Con : postitDto
+
+deactivate CIS
+deactivate Con
+
+UI --> Usr: Inform that the post-it was created successfully
+
+deactivate UI
+
+
+
+
+@enduml

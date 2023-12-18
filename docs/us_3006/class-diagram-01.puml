@@ -1,0 +1,184 @@
+@startuml
+
+top to bottom direction
+
+class CreatePostItUI {
+    + getUserBoards(): List<BoardDto>
+    + getBoard(boardId)
+    + createPostIt() : PostItDto
+    + savePostIt(postIt)
+}
+
+class CreatePostItController {
+    + getUserBoards(): List<BoardDto>
+    + getBoard(boardId): Board
+    + createPostIt(): postIt
+    + saveShareBoard(code)
+}
+
+class UserAccessBoardsService {
+    + findBoardsOfUser(EmailAddress email, BoardRepository repo, eCourseUserRepository userRepository): List<Board>
+    + findBoardsOfUserWrite(EmailAddress email, BoardRepository repo, eCourseUserRepository userRepository): List<Board>
+    +
+}
+
+class RepositoryFactory {
+
+}
+
+class BoardRepsitory {
+    + findBoeardsHiOwn(): List<SharedBoard>
+    + findBoeardsHiShared(): List<SharedBoard>
+    + save(boardId)
+}
+
+class PostItRepository {
+    + save(postIt)
+}
+
+
+class Board <<root>> <<entity>> {
+    * id <<unique>> <<automatically generated>>
+    * boradName
+    * maxRows
+    * maxColumns
+}
+
+class Cell <<entity>> {
+    * id
+    * content
+}
+
+class ColumnCell <<entity>> {
+    * id
+    * columnTittle
+    * column
+}
+
+class RowCell <<entity>> {
+    * id
+    * rowTittle
+    * row
+}
+
+class PostIt <<root>> <<entity>> {
+    * id
+    * row
+    * column
+    * content
+    * ownUser
+}
+
+class Content <<value object>> {
+    * content
+}
+
+class BoardPostIt {
+    + run()
+}
+
+
+
+class SystemUser <<root>> <<Entity>> {
+    * Name
+    * Username
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+
+}
+
+class EmailAdderss <<Value object>>
+
+class Role <<Entity>> {
+    * String name
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+class Password <<value object>>
+
+class Acronym <<value object>>
+
+class NIF <<value object>>
+
+class BirthDate <<value object>>
+
+class MechanographicNumber <<value object>> <<automatically generated>>
+
+class Grade <<value object>>
+
+class UserRepository {
+    + addUser(user: user)
+    + removeUser(user: user)
+    + CreateUser(String: fullName, String: fhortName, \n  Role: role, Email: email, Password, password)
+    + searchUser(user: user): User
+    + alterUserStatus(User: user)
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class CreatePostItService {
+    * BoardRepository boardRepository
+    * BoardChangesRepository boardChangesRepository
+    * EventPublisher publisher
+    + CreatePostItService(BoardRepository boardRepository, BoardChangesRepository boardChangesRepository)
+    + createPostIt(String postItRow, String postItColumn, String postItContent, String boardId, eCourseSystemUser user) : PostItDto
+    + createPostItSync(String boardId, int postItRow, int postItColumn, String postItContent, eCourseSystemUser user) : Board
+}
+
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+eCourseSystemUser --> "*" SharedBoard : owns >
+eCourseSystemUser --> "*" SharedBoard : shared to <
+eCourseSystemUser --> "*" PostIt : creates a >
+eCourseSystemUser --> "*" PostIt : updates a >
+eCourseSystemUser --> "*" PostIt : deletes a >
+eCourseSystemUser --> "*" Content : creates a >
+eCourseSystemUser --> "*" Content : updates a >
+eCourseSystemUser --> "*" Content : deletes a >
+
+Board "1" -- "1..20" RowCell : has >
+Board "1" -- "1..10" ColumnCell : has >
+Board "1" -- "*" PostIt : has >
+
+ColumnCell --|> Cell
+RowCell --|> Cell
+
+PostIt "*" -- "*" Content : contains >
+PostIt "*" -- "*" eCourseSystemUser : owns <
+
+
+eCourseSystemUser .. CreatePostItUI
+CreatePostItUI .. CreatePostItController
+
+CreatePostItController .. RepositoryFactory
+CreatePostItController .. BoardRepsitory
+CreatePostItController .. PostItRepository
+CreatePostItController .. UserRepsitory
+CreatePostItController .. UserAccessBoardsService
+CreatePostItController .. CreatePostItService
+CreatePostItController .. BoardPostIt
+CreatePostItController .. SharedBoard
+CreatePostItController .. PostIt
+
+UserAccessBoardsService .. ShareBoardRepsitory
+UserAccessBoardsService .. SharedBoard
+
+
+
+@enduml

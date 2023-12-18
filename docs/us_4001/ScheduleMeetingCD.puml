@@ -1,0 +1,103 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class SystemUser <<root>> <<Entity>> {
+    * FullName
+    * ShortName
+}
+class Email <<Value object>>
+
+class ScheduleMeetingUI{
+}
+class ScheduleMeetingController{
+    + scheduleMeeting( time, duration, List<Email> )
+    + saveMeeting( meeting )
+}
+class AuthenticationService{
+    + session()
+}
+class ScheduleMeetingService{
+    + validateParticipants( List<Email> )
+    + scheduleMeeting( time,duration, List<Email>, owner )
+    + saveMeeting( meeting )
+}
+class Meeting{
+    * time
+    * duration
+    * List<eCourseSystemUser>
+    * owner
+}
+interface eCourseUserRepository{
+    + containsUser( email )
+}
+interface MeetingRepository{
+    + save( meeting )
+}
+class InviteMeetingEvent  {
+    * time
+    * duration
+    * usrDestination
+    * owner
+}
+class EventPublisher  {
+    + publish( event )
+}
+class InviteMeetingWatchDog{
+    + onEvent( event )
+}
+class InvitationToMeetingController{
+    + inviteUser( event )
+}
+class InvitationToMeetingService{
+    + saveInvitation( event , sessionEmail )
+    + notifyUser( sessionEmail, userEmail )
+}
+interface MeetingInviteRepository{
+    + save( meetingInvite )
+}
+class MeetingInvite{
+    * date
+    * time
+    * duration
+    * meetingID
+}
+class EmailContainer{
+    * recipientEmail
+    * senderEmail
+}
+enum MeetingInviteState{
+    PENDING
+    ACCEPTED
+    REJECTED
+}
+
+
+SystemUser - Email
+SystemUser -- Meeting
+SystemUser .. ScheduleMeetingUI
+ScheduleMeetingUI .. ScheduleMeetingController
+ScheduleMeetingController .. ScheduleMeetingService
+ScheduleMeetingService .. eCourseUserRepository
+ScheduleMeetingService .. MeetingRepository
+ScheduleMeetingService .. Meeting
+SystemUser .. eCourseUserRepository : repo
+Meeting .. MeetingRepository : repo
+ScheduleMeetingService .. InviteMeetingEvent
+ScheduleMeetingService .. EventPublisher
+EventPublisher .. InviteMeetingEvent
+
+ScheduleMeetingController .. AuthenticationService
+ScheduleMeetingController .. eCourseUserRepository
+
+
+InviteMeetingEvent .right. InviteMeetingWatchDog: catches <
+InviteMeetingWatchDog .. InvitationToMeetingController
+InvitationToMeetingController .. InvitationToMeetingService
+InvitationToMeetingService .. MeetingInvite : creates >
+MeetingInvite .. MeetingInviteRepository : repo
+InvitationToMeetingService .. MeetingInviteRepository
+
+MeetingInvite .. MeetingInviteState
+MeetingInvite .. EmailContainer
+
+@enduml

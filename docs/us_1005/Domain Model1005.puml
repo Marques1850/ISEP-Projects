@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+hide circle
+hide methods
+left to right direction
+
+class TeachersInCourseService <<service>>
+
+
+
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+eCourseSystemUser "1" -- "*" TeachersInCourseService : use >
+
+@enduml

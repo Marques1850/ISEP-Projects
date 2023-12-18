@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class eCourseSystemUser <<root>> <<Entity>> {
+    * FullName
+    * ShortName
+    + coursesTeached()
+}
+class ListCoursesUI{
+    + presentCourses( List<Course> )
+}
+class ListCoursesController{
+    + listCoursesAvailable()
+}
+class ListCourseService{
+    + allCoursesAvailable()
+}
+class AuthorizationService{
+    + isAuthenticatedUserAuthorizedTo( BaseRole )
+    + session()
+}
+interface CourseRepository{
+    + findAllWithStatus( courseStatus )
+    + findAllCourses()
+}
+interface eCourseUserRepository{
+    + searchUser( email )
+}
+class Course <<root>> <<entity>> {
+        * id
+        * name
+}
+class BaseRole <<value object>> {
+    * role
+}
+class Role <<value object>> {
+    * name
+}
+class CourseCode <<value object>> {
+    * code
+}
+enum CourseStatus {
+OPEN
+CLOSE
+}
+
+
+eCourseSystemUser "1" -- "1" ListCourseService
+Course "1" -- "1" CourseCode
+
+eCourseSystemUser .. ListCoursesUI : interacts
+eCourseSystemUser -- Course
+ListCoursesUI .. ListCoursesController
+ListCoursesController .. ListCourseService
+ListCourseService .. CourseRepository
+ListCourseService .. AuthorizationService
+AuthorizationService .up. BaseRole
+AuthorizationService .. eCourseSystemUser
+ListCourseService .. BaseRole
+ListCourseService .. eCourseUserRepository
+CourseRepository .. Course : repo
+Course "*" -- "1" CourseStatus
+BaseRole .. Role
+eCourseSystemUser .. Role
+eCourseSystemUser .. eCourseUserRepository : repo
+
+@enduml

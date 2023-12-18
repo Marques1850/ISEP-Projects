@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/skinparam
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SSD - Request Enroll Student
+
+actor Student as Actor
+participant RequestEnrollStudentUI as UI <<presentation>>
+participant RequestEnrollStudentController as Controller <<application>>
+participant RequestEnrollStudentService as Service <<service>>
+participant CourseRepository as CourseRepo <<repository>>
+participant eCourseUserRepository as UserRepo <<repository>>
+participant EnrollmentRepository as EnrollmentRepo <<repository>>
+participant AuthorizationService as Authz <<application>>
+
+Actor -> UI: Requests to enroll in a course
+activate UI
+
+UI -> Controller: listCoursesEnrollmentOpen()
+activate Controller
+Controller -> CourseRepo: findAllWithStatus(OPEN_ENROLLMENT)
+activate CourseRepo
+CourseRepo --> Controller: List<Course>
+deactivate CourseRepo
+Controller --> UI: List<CourseDto>
+deactivate Controller
+
+
+    UI -> UI: showCourses(Courses)
+    UI --> Actor: Display List<CourseDto>
+    deactivate UI
+    Actor -> UI: Choose a course
+    activate UI
+    UI -> Controller: requestEnrollStudent(selectedCourse)
+    activate Controller
+    Controller -> Authz: session()
+    activate Authz
+    Authz --> Controller: Session
+    deactivate Authz
+    Controller -> UserRepo: searchUser(email)
+    activate UserRepo
+    UserRepo --> Controller: User
+    deactivate UserRepo
+    Controller -> Service: getUserMeca()
+    activate Service
+    Service --> Controller: mecanographic
+    deactivate Service
+    Controller -> CourseRepo: findByCode(courseCode)
+    activate CourseRepo
+    CourseRepo --> Controller: Course
+    deactivate CourseRepo
+    Controller -> Service: requestEnrollStudent(course, mecanographic, EnrollmentRepo)
+    activate Service
+    Service -> Enrollment: new Enrollment(course, mecanographic)
+    activate Enrollment
+    Enrollment --> Service: enrollment
+    deactivate Enrollment
+    Service -> EnrollmentRepo: save(enrollment)
+    activate EnrollmentRepo
+    EnrollmentRepo --> Service: true
+    deactivate EnrollmentRepo
+    Service --> Controller: true
+    deactivate Service
+    Controller --> UI: Request sent successfully
+    deactivate Controller
+    UI --> Actor: Display Request sent successfully
+    deactivate UI
+
+
+@enduml

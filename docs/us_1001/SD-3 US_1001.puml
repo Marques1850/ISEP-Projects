@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":ListSytemUsersUI" as UI
+participant ":ListSytemUsersController" as Con
+participant "ListUsersService" as LU <<service>>
+database RepositoryFactory as FAR <<repository>>
+database eCourseUserRepsitory as Us <<repository>>
+
+Man -> UI : Starts asking to list users
+activate Man
+activate UI
+
+UI-> Con : totalNumberOfUsers()
+activate Con
+
+Con->FAR
+Con->Us: totalNumberOfUsers
+activate Us
+
+Us-->Con : numberOfUsers
+deactivate Us
+
+Con-->UI: numberOfUsers
+deactivate Con
+
+UI--> Man : Shows total number of users in the \n system and asks for a confirmation
+deactivate UI
+
+Man-> UI : confirms user's listing
+activate UI
+
+
+UI-> Con: listSystemUsers()
+
+activate Con
+Con->LU: listSystemUsers()
+activate LU
+
+LU->Us: findAllUsers()
+activate Us
+
+Us-->LU: List<User> usersList
+deactivate Us
+
+LU-->Con: List<User> usersList
+deactivate LU
+
+Con-->UI: usersList
+deactivate Con
+
+UI-->Man: Shows user's list and informs the operation was sucsseful!
+deactivate UI
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+
+class Manager <<root>> <<entity>> {
+* name
+}
+
+class SystemUser <<root>> <<Entity>> {
+    * FullName
+    * ShortName
+}
+
+class ApproveApplicationUI{
+    +listPendingApplications()
+    +display()
+}
+
+class ApproveApplicationController{
+    +pendingApplications()
+}
+
+class ApproveApplicationService{
+    +listPendingApplications()
+}
+
+interface ApplicationRepository{
+    +save(List<Application>)
+    +findAllPendingApplications()
+}
+
+class Application <<root>> <<entity>> {
+    * id
+    * student
+    * course
+}
+
+enum ApplicationStatus{
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+SystemUser "1" -left- "*" Manager : is a <
+SystemUser "1" -- "1" ApproveApplicationService
+SystemUser -- Application
+
+SystemUser .. ApproveApplicationUI : interacts
+ApproveApplicationUI -- ApproveApplicationController
+ApproveApplicationController -- ApproveApplicationService
+ApproveApplicationService -- ApplicationRepository
+ApplicationRepository -- Application : repo
+Application -- ApplicationStatus : has
+
+@enduml

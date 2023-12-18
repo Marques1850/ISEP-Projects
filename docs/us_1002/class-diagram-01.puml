@@ -1,0 +1,92 @@
+@startuml
+
+
+class eCourseSystemUser {
+    * EmailAdderess email
+    * UserStatus status
+    * List<Course> coursesTeaching
+    * List<Course> coursesTeached
+    * Acronym acronym
+    * NIF nif
+    * BirthDate birthDate
+    * Grade grade
+    * int mecanographicNumber
+    * SystemUser systemUser
+    + eCourseSystemUser(String: name, String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + eCourseSystemUser(String: name, boolean: regent, String: acronym, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n Role: role, Email: email, Password, password, boolean: status)
+    + Student(String: name, int: mecanographicNumber, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n  Role: role, Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+class Course {
+    * int id
+    * name
+    * CourseStatus status
+    * Code code
+    * Teacher regent
+    + Course(int id, String name, CourseStatus status, Code code, Teacher regent)
+}
+
+class UserRepository {
+    + addUser(user: user)
+    + removeUser(user: user)
+    + CreateUser(String: fullName, String: fhortName, \n  Role: role, Email: email, Password, password)
+    + searchUser(user: user): User
+    + alterUserStatus(User: user)
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class CourseRepository {
+    + addCourse(course: course)
+    + removeCourse(course: course)
+    + verifyCourse(course: course): boolean
+    + Course(int: id, String: name, CourseStatus: status, Code: code, Teacher: regent)
+}
+
+class CreateNewCourseUI {
+    + verifyCourse(int id) : boolean
+    + existTeacher(int id)
+    + createCourse(int: id, String: name, CourseStatus: status, Code: code, Teacher: regent)
+    + saveCourse(Course: course)
+}
+
+class CreateNewCourseController {
+    + verifyCourse(int id) : boolean
+    + existTeacher(int id)
+    + createCourse(int: id, String: name, CourseStatus: status, Code: code, Teacher: regent)
+    + add(Course: course)
+}
+
+class CourseBuilder {
+    - id: int
+    - name: String
+    - status: CourseStatus
+    - code: Code
+    - regent: Teacher
+    + build()
+    + withId( id: int ): CourseBuilder
+    + withName( name: String ): CourseBuilder
+    + withStatus( status: CourseStatus ): CourseBuilder
+    + withCode( code: Code ): CourseBuilder
+    + withRegent( regent: Teacher ): CourseBuilder
+}
+
+
+
+'Relationships
+
+
+eCourseSystemUser -left- UserRepository
+Course -- CourseRepository
+
+eCourseSystemUser .. CreateNewCourseUI
+CreateNewCourseUI .. CreateNewCourseController
+CreateNewCourseController .. CourseRepository
+CreateNewCourseController .. UserRepository
+CreateNewCourseController -right-> CourseBuilder
+CourseBuilder --> Course : builds
+
+
+
+@enduml

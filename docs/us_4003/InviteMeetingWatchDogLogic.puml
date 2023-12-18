@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+participant InviteMeetingWatchDog as DOG <<listener>>
+participant InviteMeetingEvent as EVENT <<event>>
+participant InvitationToMeetingController as CTRL <<controller>>
+participant InvitationToMeetingService as SVC   <<service>>
+participant MeetingInvite as INV <<entity>>
+database MeetingInviteRepository as REPOINV <<repository>>
+
+
+
+activate DOG
+DOG --> CTRL : create
+
+    DOG -> CTRL : inviteUser( event )
+    activate CTRL
+    CTRL -> SVC : saveInvitation( event )
+        activate SVC
+        SVC -> INV** : create
+        SVC -> REPOINV : save( invite )
+            activate REPOINV
+            REPOINV --> SVC : invitation
+            deactivate REPOINV
+
+
+    SVC -> SVC : notifyUser()
+
+
+
+
+    CTRL --> DOG : state
+    deactivate CTRL
+
+
+
+
+
+deactivate DOG
+@enduml

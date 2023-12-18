@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to share a board
+
+activate ":System"
+":System" -> User:shows board which user owns and asks to select it
+deactivate ":System"
+
+User -> ":System": selects the board
+loop
+activate ":System"
+
+":System" -> User: asks for permissions to give the users
+
+deactivate ":System"
+
+User -> ":System": specifies the permissions
+
+activate ":System"
+
+":System" -> User: asks to select the users to share board with
+
+deactivate ":System"
+
+User -> ":System": selects the users
+
+activate ":System"
+
+end loop
+
+
+":System" -> User: Informs of operation status
+deactivate ":System"
+
+deactivate User
+
+@enduml

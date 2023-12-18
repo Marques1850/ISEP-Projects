@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":AlterUserStatusUI" as UI
+participant ":AlterUserStatusController" as Con
+database eCourseUserRepsitory as Us <<repository>>
+database RepositoryFactory as FAR <<repository>>
+participant "Usr: User" as Usr
+
+Man -> UI : Starts registering to Disable/Enable User
+activate Man
+activate UI
+
+UI--> Man :Asks to insert the user id
+deactivate UI
+
+
+Man -> UI : types requested data
+activate UI
+
+UI-> Con: user = searchUser()
+
+activate Con
+Con->FAR
+Con->Us: searchUser()
+activate Us
+
+Us->Us: searchUser(user)
+
+Us-->Con: userDto
+deactivate Us
+
+Con-->UI: userDto
+deactivate Con
+
+UI-->Man: shows user
+deactivate UI
+
+Man->UI : confirms user alteration status
+activate UI
+
+UI->Con : alterUserStatus(user)
+activate Con
+
+Con-> Us : alterUserStatus(user)
+activate Us
+
+Us->Usr: alterUserStatus(user)
+activate Usr
+
+Usr->Usr: alterUserStatus(user)
+deactivate Usr
+
+Us-->Con: userDto
+deactivate Us
+
+Con --> UI : UserDtoStatus
+deactivate Con
+
+UI--> Man : shows new user status and informs \n user status altered successfully
+deactivate UI
+
+@enduml

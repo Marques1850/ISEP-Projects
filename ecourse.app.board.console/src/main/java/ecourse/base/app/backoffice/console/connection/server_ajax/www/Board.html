@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<script src="GenerateTable.js"></script>
+<head>
+    <title>Board</title>
+    <style>
+
+        h1 {
+            font-size: 60px;
+            text-align: left;
+            color: #fcedd8;
+            font-family: 'Niconne', cursive;
+            text-shadow: 1px 1px 0px #eb452b,
+            2px 2px 0px #efa032,
+            3px 3px 0px #46b59b,
+            4px 4px 0px #017e7f,
+            5px 5px 0px #052939,
+            6px 6px 0px #052939,
+            7px 7px 0px #052939;
+            margin-top: 11px;
+        }
+
+
+        table {
+            display: block;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            height: 20%;
+            table-layout: fixed;
+        }
+
+        td,
+        th {
+            border: 1px solid #000;
+            padding: 20px;
+            text-align: left;
+            background-color: #EDEDF7;
+            transition: all ease 0.2s;
+        }
+
+        td:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 10px 20px 2px #F4D03F;
+        }
+
+        th {
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            background-color: #D8EDFF;
+        }
+
+        /* top-left border-radius */
+        .rounded-top-left {
+            border-top-left-radius: 10px;
+        }
+
+        .rounded-top-right {
+            border-top-right-radius: 10px;
+        }
+
+        .rounded-bottom-left {
+            border-bottom-left-radius: 10px;
+        }
+
+        .rounded-bottom-right {
+            border-bottom-right-radius: 10px;
+        }
+
+        body {
+            background-color: #1A4A68;
+        }
+
+        #refreshCount {
+            position: absolute;
+            top: 28px;
+            right: 0;
+            font-size: 24px;
+            font-family: Helvetica;
+            color: #283747;
+            margin: 10px;
+            transition: all ease 0.2s;
+            animation: mymove 5s infinite;
+
+
+            /* Add these styles to create a box with rounded corners */
+            border-radius: 10px;
+            background-color:#F0B27A;
+            padding:5px;
+            text-align:center;
+            width:auto;
+            height:auto;
+            display:inline-block;
+
+        }
+
+        /*#refreshCount:hover {
+            transform: translateY(-5px);
+            transform: scale(1.1);
+            box-shadow: 0px 10px 20px 2px rgba(0,255,255,0.7);
+        }*/
+
+        @keyframes mymove {
+            50% {box-shadow: 0px 10px 20px 0px rgba(81, 187, 83, 1)}
+        }
+
+         #loading-indicator {
+             font-family: Helvetica;
+             font-size: 24px;
+                color: #EDEDF7;
+         }
+    </style>
+    <script>
+        let refreshCount = 0;
+
+        function updateRefreshCount() {
+            refreshCount++;
+            const refreshCountElement = document.querySelector("#refreshCount");
+            refreshCountElement.textContent = `Refreshes: ${refreshCount}`;
+        }
+
+        window.addEventListener("load", () => {
+            updateRefreshCount();
+            setInterval(updateRefreshCount, 2000);
+        });
+    </script>
+</head>
+<body onload="CallGenerateTable()">
+<h1 id="board-title"></h1>
+<div id="loading-indicator">Loading...</div>
+<div id="refreshCount">Refreshes: 0</div>
+<script src="GenerateTable.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+
+actor Student
+  Student -- (View Grades)
+  (View Grades) --> (Authenticate)
+  (View Grades) --> (Retrieve Grades)
+  (View Grades) --> (Display Grades)
+
+
+
+@enduml

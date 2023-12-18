@@ -1,0 +1,137 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+actor Teacher as Actor
+
+participant "UpdateClassUI" as UI <<presentation>>
+participant "UpdateClassController" as Controller <<application>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant "UpdateClassService" as SERVICE <<service>>
+'participant "Manager" as Manager
+
+database "ClassRepository" as Repository <<repository>>
+
+activate Actor
+Actor --> UI : Starts class schedule update process
+activate UI
+
+UI --> Actor: Requests for Class title
+Actor --> UI: Provides Class title
+
+UI -> Controller: create
+activate Controller
+deactivate Controller
+
+UI -> Controller: getScheduledClassByTitle()
+activate Controller
+
+Controller -> AUTHZ: session()
+activate AUTHZ
+AUTHZ --> Controller: session
+deactivate AUTHZ
+
+Controller -> USS: authenticatedUser()
+activate USS
+USS --> Controller: user
+deactivate USS
+
+Controller -> SERVICE: create
+activate SERVICE
+deactivate SERVICE
+Controller -> SERVICE: getScheduledClassByTitle(
+activate SERVICE
+
+SERVICE -> Repository: getScheduledClassByTitle()
+activate Repository
+Repository --> SERVICE: Class
+deactivate Repository
+SERVICE --> Controller: Class
+deactivate SERVICE
+
+Controller -> UI: Class
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Shows Class and requests changes to be made
+deactivate UI
+
+Actor -> UI: Inserts changes (date, duration)
+activate UI
+UI -> Controller: updateExistingClass()
+activate Controller
+Controller -> SERVICE: updateExistingClass()
+activate SERVICE
+
+
+loop loop through the verification process for each class data input
+SERVICE -> SERVICE: checkCoincidentialClasses(List<Class>)
+SERVICE -> SERVICE: checkTeacherAvailability(Teacher)
+alt if coincidential classes
+
+SERVICE --> Controller: errorCoincidentialClass()
+deactivate SERVICE
+Controller --> UI: errorCoincidentialClass()
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Show error message (coincidential classes)
+UI --> Actor: Request new class data (date, duration)
+deactivate
+Actor --> UI: Provides Class data
+Activate UI
+
+UI -> Controller: updateExistingClass()
+activate Controller
+
+Controller -> SERVICE: updateExistingClass()
+activate SERVICE
+end
+
+SERVICE -> SERVICE: checkOverlappingClasses(List<Class>)
+alt if participant has overlapping classes
+SERVICE --> Controller: warnOverlappingClass()
+deactivate SERVICE
+Controller --> UI: warnOverlappingClass()
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Show warning message (overlapping classes)
+UI --> Actor: Ask for confirmation to schedule class or input new class information
+deactivate UI
+
+alt if teacher ignores warning
+Actor --> UI: Ignores warning
+Activate UI
+UI -> Controller: updateExistingClass()
+activate Controller
+Controller -> SERVICE: updateExistingClass()
+activate SERVICE
+
+else if teacher inputs new class information
+Actor --> UI: Inputs new class information
+UI -> Controller: updateExistingClass()
+Controller -> SERVICE: updateExistingClass()
+end
+end
+end
+
+
+
+
+
+SERVICE -> Repository: Class
+activate Repository
+Repository -> Repository: save(Class)
+Repository --> SERVICE: state
+deactivate Repository
+SERVICE --> Controller: state
+deactivate SERVICE
+
+Controller --> UI: state
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Shows state of execution (Success or Failure)
+deactivate UI
+
+@enduml

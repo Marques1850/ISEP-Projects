@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":SetTeachersCourseUI" as UI
+participant ":SetTeachersCourseController" as Con
+participant "TeachersinCourseService" as TC <<service>>
+participant Teacher as TE
+database UserRepository as USR <<repository>>
+database CourseRepository as Cou <<repository>>
+
+Man -> UI : Starts asking to set Teachers in a course
+activate Man
+activate UI
+
+UI-> Con : getCourses()
+activate Con
+
+
+Con->Cou<<Repository>>: List<Course> Courses=getall()
+activate Cou
+
+Cou-->Con : Courses
+deactivate Cou
+
+Con-->UI: CourseDTO
+deactivate Con
+
+UI--> Man : Shows Courses and asks to choose one
+deactivate UI
+
+Man-> UI : Selects a course
+activate UI
+
+UI-> Con : getTeachers()
+activate Con
+
+
+Con->USR<<Repository>>: List<User> Teachers=getallTeachers()
+activate USR
+
+USR-->Con : Teachers
+deactivate USR
+
+Con-->UI: TeacherDTO
+deactivate Con
+
+UI--> Man : Shows Teachers and asks to choose the teachers needed
+deactivate UI
+
+Man-> UI : Selects all wanted Teachers
+activate UI
+
+
+UI-> Con: SetTeachersInCourse(String CourseCode, List<Acronyms> teachers)
+
+activate Con
+Con->Cou<<Repository>>:  Course=findByCode(COURSECODE CourseCode)
+activate Cou
+Cou-->Con: Course
+deactivate Cou
+loop for each Acronym in teachers
+Con->USR<<Repository>>: User=findByAcronym(Acronym)
+activate USR
+USR-->Con: Teacher
+deactivate USR
+end loop
+
+Con->TC: SetTeacherCourse(Course course, List<eCourseSystemUser> teachers)
+activate TC
+loop for each teacher in teachers
+TC->TE: setTeacherCourse(Course course)
+activate TE
+TE-->TE: coursesTeaching.add(course)
+end loop
+
+deactivate TE
+
+TC-->Con:TeachersAltered
+deactivate TC
+Con->Cou<<Repository>>: add(TeachersAltered)
+activate Cou
+loop for each Teacher in TeachersAltered
+Cou->Cou<<Repository>>: save()
+end loop
+Cou-->Con: operation status
+deactivate Cou
+
+Con-->UI: operation status
+deactivate Con
+
+UI-->Man:operation status
+deactivate UI
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Student as Man
+
+activate Man
+Man--> ":System" : Asks to view all grades of himself
+activate ":System"
+":System" --> Man : Shows all exams and respective grades of User
+deactivate ":System"
+
+deactivate Man
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Teacher
+usecase "View list of exam grades of courses" as UC1
+Teacher --> UC1
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to create a Post-It in a Share board
+
+activate ":System"
+":System" -> User: show boards that the user owns or \n boards that are shared with the user
+deactivate ":System"
+
+User -> ":System": types the post-it information
+
+activate ":System"
+":System" -> User: verify if the post-it information is valid, print the post-it \n information and asks for confirmation
+deactivate ":System"
+
+User -> ":System": confirms the post-it creation
+
+activate ":System"
+":System" -> User: Informs that the post-it has been created successfully
+deactivate ":System"
+
+deactivate User
+
+@enduml

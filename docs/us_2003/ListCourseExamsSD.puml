@@ -1,0 +1,61 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SD - List all exams of a course
+
+actor Teacher as Actor
+participant ListExamsUI as UI <<presentation>>
+participant ListCoursesController as ControllerCrs <<application>>
+participant ListExamsController as Controller <<application>>
+participant AuthorizationService as AUTHZ   <<service>>
+participant ListCourseExamsService as SRV <<service>>
+participant CourseCode as CODE
+database CourseRepository as Repository2 <<repository>>
+database ExamRepository as Repository <<repository>>
+
+
+Actor --> UI: option to list exams
+activate UI
+UI -> ControllerCrs: create
+UI -> ControllerCrs: listCoursesAvailable()
+    activate ControllerCrs
+    ControllerCrs --> UI: List<Course>
+    deactivate ControllerCrs
+UI -> UI :  presentCourses( List<Course> )
+UI --> Actor : asks to insert one courseID
+Actor --> UI: courseID
+
+UI -> Controller: create
+
+UI -> Controller: listCourseExams( courseID )
+    activate Controller
+    Controller-> AUTHZ : isAuthenticatedUserAuthorizedTo(BaseRoles.TEACHER)
+        activate AUTHZ
+        AUTHZ --> Controller : true
+        deactivate AUTHZ
+    Controller -> SRV : create
+    Controller -> SRV : allCourseExams( courseID )
+        activate SRV
+        SRV -> CODE: isValidCode( courseID )
+            activate CODE
+            CODE --> SRV : boolean
+            deactivate CODE
+        SRV -> Repository2 : verifyCourse( courseID )
+            activate Repository2
+            Repository2 --> SRV : boolean
+            deactivate Repository2
+        SRV -> Repository : findAllOfCourse( courseID )
+            activate Repository
+            Repository --> SRV : List<Exam>
+            deactivate Repository
+
+        SRV --> Controller : List<Exam>
+        deactivate SRV
+    Controller -->UI: List<Exam>
+    deactivate Controller
+UI -> UI :  presentExams( List<Exam> )
+UI-->Actor: shows exams
+deactivate UI
+@enduml

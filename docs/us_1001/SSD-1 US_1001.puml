@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to register a new user
+activate ":System"
+":System" --> Man : shows a list of possible roles (Manger, Teacher, Student)
+deactivate ":System"
+
+Man --> ":System" : choose role
+
+activate ":System"
+":System"--> Man : asks for user's data depending on the role
+deactivate ":System"
+
+Man--> ":System" : types the required data
+
+activate ":System"
+":System"-->Man : request to generate password
+deactivate ":System"
+
+Man----> ":System" :  type the password
+
+activate ":System"
+":System"-->Man : shows all data that was input and requests confirmation of such
+deactivate ":System"
+
+Man----> ":System" : confirms
+
+activate ":System"
+":System" --> Man : informs register user's operation success
+deactivate ":System"
+
+deactivate Man
+@enduml

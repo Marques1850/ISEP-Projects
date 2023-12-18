@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to create a new course
+
+activate ":System"
+":System"--> Man : asks for course data
+deactivate ":System"
+
+Man--> ":System" : types the required data
+
+activate ":System"
+":System"-->Man : request a regent teacher
+deactivate ":System"
+
+Man----> ":System" :  type id of regent teacher
+
+activate ":System"
+":System"-->Man : shows all data that was input and requests confirmation of such
+deactivate ":System"
+
+Man----> ":System" : confirms
+
+activate ":System"
+":System" --> Man : informs create course operation success
+deactivate ":System"
+
+deactivate Man
+@enduml

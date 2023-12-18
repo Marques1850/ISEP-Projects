@@ -1,0 +1,64 @@
+@startuml
+
+class Student <<root>> <<entity>> {
+* name
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+    * FullName
+    * MecanographicNumber
+    * ShortName
+}
+class BulkEnrollUI  {
+    +listCoursesEnrollmentOpen()
+    +display()
+}
+
+class BulkEnrollController{
+    +listCoursesEnrollmentOpen()
+    +enrollStudents()
+}
+
+class BulkEnrollService{
+    +enrollStudents()
+    +parse(csvPath)
+    +validateStudents()
+}
+
+interface CourseRepository{
+    +findAllWithStatus
+    +findByCode()
+}
+
+interface eCourseUserRepository{
+    +findByMeca()
+}
+
+class Course{
+    * code
+    * name
+    * status
+    +disableEnrollment()
+    +numStudents()
+
+}
+
+
+enum Status{
+    OPEN
+    CLOSED
+    OPEN_ENROLLMENT
+    CLOSED_ENROLLMENT
+}
+
+eCourseSystemUser "1" -left- "*" Student : is a <
+
+eCourseSystemUser ..BulkEnrollUI : interacts
+BulkEnrollUI -- BulkEnrollController
+BulkEnrollController -- BulkEnrollService
+BulkEnrollController -- CourseRepository
+CourseRepository -- Course
+BulkEnrollService -- eCourseUserRepository
+Course -- Status
+
+@enduml

@@ -1,0 +1,88 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SD - List courses available
+
+actor SystemUser as Actor
+participant ListCoursesUI as UI <<presentation>>
+participant ListCoursesController as Controller <<application>>
+participant ListCourseService as SRV <<service>>
+participant AuthorizationService as AUTHZ
+participant eCourseSystemUser as USR
+
+
+database CourseRepository as Repository <<repository>>
+database eCourseUserRepository as UsrRepo <<repository>>
+
+Actor --> UI: List Courses Available
+activate UI
+UI -> Controller: create
+
+UI -> Controller: listCoursesAvailable()
+    activate Controller
+
+
+    Controller -> SRV : create
+    Controller -> SRV : allCoursesAvailable()
+        activate SRV
+
+
+
+
+        note over SRV
+         if it´s a student:
+        end note
+        SRV-> AUTHZ : isAuthenticatedUserAuthorizedTo(BaseRoles.STUDENT)
+            activate AUTHZ
+            AUTHZ --> SRV : true
+            deactivate AUTHZ
+        SRV -> Repository : findAllWithStatus( CourseStatus.OPEN )
+            activate Repository
+            Repository --> SRV : List<Course>
+            deactivate Repository
+
+
+        note over SRV
+         if it´s a teacher:
+        end note
+        SRV-> AUTHZ : isAuthenticatedUserAuthorizedTo(BaseRoles.TEACHER)
+                    activate AUTHZ
+                    AUTHZ --> SRV : true
+                    deactivate AUTHZ
+
+        SRV -> AUTHZ : getAuthenticatedUser().email()
+            activate AUTHZ
+            AUTHZ --> SRV : email
+            deactivate AUTHZ
+        SRV -> UsrRepo : searchUser(email)
+            activate UsrRepo
+            UsrRepo --> SRV : user
+            deactivate UsrRepo
+        SRV -> USR : coursesTeached()
+            activate USR
+            USR --> SRV: List<Course>
+            deactivate USR
+
+
+        note over SRV
+         if it´s a manager:
+        end note
+        SRV-> AUTHZ : isAuthenticatedUserAuthorizedTo(BaseRoles.MANAGER)
+                    activate AUTHZ
+                    AUTHZ --> SRV : true
+                    deactivate AUTHZ
+        SRV -> Repository : findAll()
+            activate Repository
+            Repository --> SRV : List<Course>
+            deactivate Repository
+
+        SRV --> Controller : List<Course>
+        deactivate SRV
+    Controller -->UI: List<Course>
+    deactivate Controller
+UI -> UI :  display( List<Course> )
+UI-->Actor
+deactivate UI
+@enduml

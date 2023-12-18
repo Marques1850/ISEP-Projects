@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class eCourseSystemUser <<root>> <<Entity>> {
+        * FullName
+        * ShortName
+}
+class ListExamsUI{
+    +presentCourses( List<Course> )
+    +presentExams( List<Exam> )
+}
+class ListExamsController{
+    + listCourseExams( courseID )
+}
+class ListCoursesController{
+    + allCoursesAvailable()
+}
+class ListCourseExamsService{
+    + allCourseExams( courseID )
+}
+class AuthorizationService{
+    + isAuthenticatedUserAuthorizedTo( BaseRole.TEACHER )
+}
+interface CourseRepository{
+    + verifyCourse( courseID )
+
+}
+interface ExamRepository{
+    + findAllOfCourse( courseID )
+}
+class Course <<root>> <<entity>> {
+    * id
+    * name
+}
+class CourseCode{
+    * code
+    + isValidCode( courseCode )
+}
+class Exam <<root>> <<event>> {
+
+}
+class ListCourseService{
+    + allCoursesAvailable()
+}
+
+
+
+eCourseSystemUser .. ListExamsUI
+ListExamsUI .. ListExamsController
+ListExamsUI .. ListCoursesController
+ListExamsController .. ListCourseExamsService
+ListCourseExamsService .. ExamRepository
+ListCourseExamsService .. CourseRepository
+Course "1" -- "0..*" Exam : related to <
+ExamRepository .. Exam : repo
+CourseRepository .. Course : repo
+eCourseSystemUser "1" -- "*" Exam : creates >
+Course "*" - "*" eCourseSystemUser : teaches <
+ListCoursesController .. ListCourseService
+ListCourseService .. CourseRepository
+Course .. CourseCode
+ListCourseExamsService .. AuthorizationService
+eCourseSystemUser .. AuthorizationService : auth
+@enduml

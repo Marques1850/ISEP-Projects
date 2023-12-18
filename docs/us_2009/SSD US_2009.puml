@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Student
+
+activate Student
+
+Student -> ":System": asks to take a formative exam
+
+activate ":System"
+":System" --> Student: shows a list of formative exams of the courses that \n are avalable to make
+deactivate ":System"
+
+Student -> ":System": select formative exam
+
+loop
+    activate ":System"
+    ":System" --> Student: shows the formative exam question
+    deactivate ":System"
+
+    Student -> ":System": respond to the question
+end loop
+
+activate ":System"
+":System" --> Student: shows the grade that the student take in \n the formative exam and tells exam is finish
+deactivate ":System"
+
+deactivate Student
+
+@enduml

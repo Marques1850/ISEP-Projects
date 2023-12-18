@@ -1,0 +1,102 @@
+@startuml
+
+top to bottom direction
+
+class ShareBoardUI {
+    + buildBoardMenu(List<SharedBoardDto>)
+    + ShowBoard(List<SharedBoardDto>)
+    + showBoardPermissions(List<BoardUserPermissions>)
+    +buildPermissionsMenu(List<BoardUserPermissions>)
+}
+
+class ShareBoardController {
+     -user
+     -userRepository
+     -BoardRepository
+
+    + getOwnedBoards(): List<SharedBoardDto>
+    + ValidateEmail(email): boolean
+    + ShareBoard(id,permissions):
+
+}
+
+
+class RepositoryFactory {
+
+}
+
+class ShareBoardRepsitory {
+    + findBoardsIOwn(): List<SharedBoard>
+    + findBoardsShared(): List<SharedBoard>
+    + saveShareBoard(boardId, postItId)
+}
+
+class SystemUser <<root>> <<Entity>> {
+    * Name
+    * Username
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+
+}
+
+class EmailAdderss <<Value object>>
+
+class Role <<Entity>> {
+    * String name
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+class Password <<value object>>
+
+class Acronym <<value object>>
+
+class NIF <<value object>>
+
+class BirthDate <<value object>>
+
+class MechanographicNumber <<value object>> <<automatically generated>>
+
+class Grade <<value object>>
+
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+eCourseSystemUser --> "*" SharedBoard : owns >
+eCourseSystemUser --> "*" SharedBoard : shared to <
+
+SharedBoard "1" -- "1..20" RowCell : has >
+SharedBoard "1" -- "1..10" ColumnCell : has >
+SharedBoard "1" -- "1..*" NormalCell : has >
+
+NormalCell --|> Cell
+ColumnCell --|> Cell
+RowCell --|> Cell
+
+
+
+eCourseSystemUser .. ShareBoardUI
+ShareBoardUI .. ShareBoardController
+
+ShareBoardController .. ShareBoardRepsitory
+ShareBoardController .. RepositoryFactory
+ShareBoardController .. SharedBoard
+
+
+
+
+@enduml

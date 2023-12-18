@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/skinparam
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SSD - Bulk Enroll Students
+
+actor Actor as Actor
+participant BulkEnrollUI as UI <<presentation>>
+participant BulkEnrollController as Controller <<application>>
+participant BulkEnrollService as Service <<service>>
+participant CourseRepository as CourseRepo <<repository>>
+participant eCourseUserRepository as ActorRepo <<repository>>
+
+Actor -> UI: Requests to bulk enroll students
+activate UI
+
+UI -> Controller: listCoursesEnrollmentOpen()
+activate Controller
+Controller -> CourseRepo: findAllWithStatus(OPEN_ENROLLMENT)
+activate CourseRepo
+CourseRepo --> Controller: List<Course>
+deactivate CourseRepo
+Controller --> UI: List<CourseDto>
+deactivate Controller
+
+    UI -> UI: showCourses(Courses)
+    UI --> Actor: Display List<CourseDto>
+    deactivate UI
+    Actor -> UI: Choose a course
+    activate UI
+    UI -> Actor: Ask for CSV file path
+    deactivate UI
+    activate Actor
+    Actor --> UI: types CSV file path
+    deactivate Actor
+     activate UI
+    UI -> Controller: enrollStudents(selectedCourse, csvPath)
+    activate Controller
+    Controller -> CourseRepo: findByCode(courseID)
+    activate CourseRepo
+    CourseRepo --> Controller: Course
+    deactivate CourseRepo
+    Controller -> Service: enrollStudents(course, csvPath, repo)
+    activate Service
+    Service -> Service: List mecanographicNumbers= parse(csvPath)
+    Service -> Service: corrected= validateStudents(mecanographicNumbers, repo)
+    loop for each mecanographicNumber
+    Service -> ActorRepo: findByMeca(mecanographicNumber)
+    activate ActorRepo
+    ActorRepo --> Service: User
+deactivate ActorRepo
+    end
+    Service -> Service: enrollStudents(course, corrected, fepo)
+    Service -> user: setStudentCourse(course)
+    loop for each user
+    activate user
+    user --> Service: state
+    deactivate user
+    Service -> course: setNumStudents(+1)
+    activate course
+    course --> Service: state
+    deactivate course
+    end
+    ALT course max students reached
+    Service -> Course: disableEnrollments()
+    activate Course
+    deactivate Course
+    END
+
+
+    activate Service
+
+    deactivate Course
+    Service --> Service: studentsDto
+    deactivate Service
+    Service --> Controller: Studentsdto
+    deactivate Service
+    Controller --> UI: -
+    deactivate Controller
+    UI -> UI: showStudents(enrolleds)
+
+    UI --> Actor: Display enrolled students
+    deactivate UI
+    Actor --> UI: Choose a student
+    activate UI
+    UI --> Actor: Display "Students enrolled successfully"
+    deactivate UI
+
+
+@enduml

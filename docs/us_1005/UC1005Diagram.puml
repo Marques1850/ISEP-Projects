@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+actor Manager
+
+
+
+Manager -- (Sets course's Teachers)
+(Sets course's Teachers) ..> (Teacher) : <<extends>>
+(Sets course's Teachers) ..> (Course) : <<extends>>
+
+
+
+
+@enduml

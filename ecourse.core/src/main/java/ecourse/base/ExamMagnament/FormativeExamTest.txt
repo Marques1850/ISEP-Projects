@@ -1,0 +1,53 @@
+Title
+Header Description: Exam Header
+Final Grade: 00.00
+17/05/2023
+Section: 1
+Section Description: First Section
+True or False type question!
+Question: 1
+Question Cotation: (3.00)
+* Portugal é um pais da Europa?
+Question: 2
+Question Cotation: (3.00)
+O Brasil é um pais da America do Sul?
+Section: 2
+Section Description: Second Section
+Multiple Choice type question!
+Question: 1
+Question Cotation: (5.00)
+Qual é o maior pais do mundo?
+Option: * China
+Option: Russia
+Option: Brasil
+Option: Estados Unidos
+Section: 3
+Section Description: Third Section
+Short Answer type question!
+Question: 1
+Question Cotation: (5.00)
+Qual é o maior pais da America do Sul? [Brasil]
+Section: 4
+Section Description: Fourth Section
+Numerical Answer type question!
+Question: 1
+Question Cotation: (1.00)
+5 + 5 = [10, 2]
+Question: 2
+Question Cotation: (1.00)
+10 + 5 = [15, 2]
+Section: 5
+Section Description: Fifth Section
+Missing Word Answer type question!
+Question: 1
+Question Cotation: (1.00)
+Portugal é um país da [Europa] Ocidental.
+Section: 6
+Section Description: Sixth Section
+Matching Answer type question!
+Question: 1
+Question Cotation: (1.00)
+America [Washington]
+California [Silicon Valley]
+Florida [Miami]
+Texas [Dallas]

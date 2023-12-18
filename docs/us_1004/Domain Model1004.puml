@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+hide circle
+hide methods
+left to right direction
+
+
+class Manager <<Entity>> {
+    * name
+}
+
+package "COURSE" <<aggregate>> {
+    class Course <<root>> <<entity>> {
+        * id <<unique>> <<automatically generated>>
+        * name <<unique>>
+
+    }
+
+    enum CourseStatus <<enum>> {
+        + OPEN
+        + CLOSED
+    }
+
+    class Code <<value object>>
+}
+
+
+
+
+
+Manager "*" --> "*" CourseStatus : decides
+Course --> "1" CourseStatus
+Course --> "1" Code
+
+
+
+SystemUser "1" -- "*" Manager : is a <
+
+
+
+
+
+@enduml

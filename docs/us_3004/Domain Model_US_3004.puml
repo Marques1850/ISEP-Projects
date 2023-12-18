@@ -1,0 +1,110 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+package "SHAREBOARD" <<aggregate>> {
+    class Board <<root>> <<entity>> {
+        * id <<unique>> <<automatically generated>>
+        * boradName
+        * maxRows
+        * maxColumns
+    }
+
+    class Cell <<entity>> {
+        * id
+        * content
+    }
+
+    class ColumnCell <<entity>> {
+        * id
+        * columnTittle
+        * column
+    }
+
+    class RowCell <<entity>> {
+        * id
+        * rowTittle
+        * row
+    }
+    class BoardChanges <<entity>> {
+        * id
+        * content
+        * BoardChanges
+    }
+    class BoardChangedEvent <<event>> {
+    }
+
+    BoardChanges "1" -- "1" BoardChangedEvent
+    Board "1" -- "*" BoardChanges
+}
+
+
+
+
+
+'Relationships
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+eCourseSystemUser --> "*" SharedBoard : owns >
+eCourseSystemUser --> "*" SharedBoard : shared to <
+
+
+
+SharedBoard "1" -- "1..20" RowCell : has >
+SharedBoard "1" -- "1..10" ColumnCell : has >
+SharedBoard "1" -- "1..*" NormalCell : has >
+
+NormalCell --|> Cell
+ColumnCell --|> Cell
+RowCell --|> Cell
+
+
+
+
+@enduml

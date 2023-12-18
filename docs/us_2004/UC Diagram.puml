@@ -1,0 +1,11 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Student
+usecase "Take a exam" as UC1
+Student --> UC1
+@enduml

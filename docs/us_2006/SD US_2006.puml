@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Teacher as stu
+
+participant ":ListExamGradesCourseUI" as UI
+participant ":ListExamGradesCourseController" as Con
+participant "SeeTeacherCourseGradesService" as LE <<service>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant Teacher as STU
+participant ListExamGradesCourseService as LEC<<service>>
+database RepositoryFactory as FAR <<repository>>
+database UserRepository as USR <<repository>>
+database ExamRepository as EXR <<repository>>
+
+stu -> UI : Starts asking to list exam grades of his course
+activate stu
+activate UI
+
+UI-> Con : getExamGradesOfCourse()
+activate Con
+
+
+Con->AUTHZ : session()
+activate AUTHZ
+AUTHZ --> Con: session
+deactivate AUTHZ
+
+Con -> USS: authenticatedUser()
+activate USS
+USS --> Con: user
+
+Con -> FAR
+
+deactivate USS
+Con -> LE: getExamGradesOfCourse(user)
+activate LE
+LE->USR: searchUser(user)
+activate USR
+USR->USR:searchUser(email)
+USR-->LE: teacher
+deactivate USR
+LE->STU: isRegent(teacher)
+activate STU
+STU-->LE: course
+deactivate STU
+LE-->LEC: getExamGradesOfCourse(course)
+activate LEC
+loop for each course
+
+LEC-->EXR: findExamGrades(course)
+activate EXR
+end loop
+EXR-->LEC: List<ExamGrades> ExamGrades
+deactivate EXR
+LEC-->LE: List<ExamGrades> ExamGrades
+deactivate LEC
+LE-->Con: List<ExamGrades> ExamGrades
+deactivate LE
+Con-->UI: List<ExamGradesDto> ExamGrades
+deactivate Con
+UI-->stu: List<ExamGradesDto> ExamGrades
+deactivate UI
+deactivate stu
+
+@enduml

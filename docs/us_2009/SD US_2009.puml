@@ -1,0 +1,140 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Student as stu
+
+participant ":ListFormativeExamGradesCourseUI" as UI
+participant ":ListFormativeExamGradesCourseController" as Con
+database RepositoryFactory as FAR <<repository>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant "TakeFormativeExamService" as LE <<service>>
+database UserRepository as USR <<repository>>
+participant "eCourseSystemUser" <<entity>>
+participant ListFormativeExamGradesCourseService as LEC<<service>>
+database FormativeExamRepository as EXR <<repository>>
+participant "FormativeExamEvalListner" as EEL
+participant "FormativeExam" as Ex <<entity>>
+participant "ExamGrade" as EG
+
+stu -> UI : Starts asking to take a formative exam
+activate stu
+activate UI
+
+UI-> Con : getTakeableFormativeExams()
+activate Con
+
+Con -> FAR
+
+
+Con -> Con: getTakeableFormativeExams()
+Con -> Con : getUser()
+Con->AUTHZ : session()
+activate AUTHZ
+AUTHZ --> Con: session
+deactivate AUTHZ
+
+Con -> USS: authenticatedUser()
+activate USS
+USS --> Con: user
+deactivate USS
+
+Con -> LE : getFormativeExams(user,repoE,repo)
+
+activate LE
+LE -> USR : eCourseSystemUser = findUser(SystemUser user, eCourseUserRepository repo )
+
+activate USR
+USR->USR:searchUser(email)
+USR-->LE: student
+deactivate USR
+
+LE -> eCourseSystemUser : getStudentCourses(eCourseSystemUser user)
+
+activate eCourseSystemUser
+eCourseSystemUser -> eCourseSystemUser : coursesLearning()
+eCourseSystemUser --> LE : List<Course>
+deactivate eCourseSystemUser
+
+LE -> LEC : getTakeableFormativeExams(courses,repoE)
+
+activate LEC
+LEC -> EXR : findAllOfCourse(course.code()
+
+activate EXR
+EXR -> EXR : findAllOfCourse(course.code()
+EXR --> LEC : List<FormativeExam>
+deactivate EXR
+
+LEC --> LE : List<FormativeExam>
+deactivate LEC
+
+LE --> Con : List<FormativeExam>
+deactivate LE
+
+Con --> UI : List<FormativeExamDto>
+deactivate Con
+
+UI --> stu : asks to select e exam to take
+deactivate UI
+
+stu -> UI : select a formative exam
+
+activate UI
+UI -> Con : takeFormativeExam(examCode)
+
+activate Con
+Con -> EXR : findByCode(examCode)
+
+activate EXR
+EXR -> EXR : findByCode(examCode)
+EXR --> Con : exam
+deactivate EXR
+
+Con -> LE : takeFormativeExam(exam)
+activate LE
+
+LE -> Ex: content = getContent()
+activate Ex
+Ex -> Ex:
+LE -> LE: Paths.get("exam.txt"), content
+Ex -> Ex : grades = getGrades();
+Ex --> LE : grades
+deactivate Ex
+
+
+
+LE -> EEL** :
+
+activate EEL
+loop
+    EEL --> stu: print question and asks for answer
+    stu -> EEL: answers the question
+end loop
+
+EEL --> stu: print exam grade of the student
+
+
+EEL -> EG**:
+EEL -> EG: grades.add(grade)
+activate EG
+deactivate EG
+
+deactivate EEL
+deactivate LE
+
+Con -> EXR : save(exam)
+
+activate EXR
+EXR -> EXR : save(exam)
+deactivate EXR
+deactivate Con
+
+UI --> stu: finish exam
+
+deactivate UI
+deactivate stu
+
+@enduml

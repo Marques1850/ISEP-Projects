@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor Teacher
+usecase "Create/Add Question" as UC1
+usecase "Update Question" as UC2
+Teacher --> UC1
+Teacher --> UC2
+@enduml

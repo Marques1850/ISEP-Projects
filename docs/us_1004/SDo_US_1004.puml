@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":openCourseUI" as UI
+participant ":openCourseController" as Con
+participant ":Course" as Cour
+database CourseRepository as Cou <<repository>>
+
+Man -> UI : Starts asking to open a course
+activate Man
+activate UI
+
+UI-> Con : getclosedCourses()
+activate Con
+
+
+Con->Cou<<Repository>>: List<Course> Courses=getclosedCourses()
+activate Cou
+
+Cou-->Con : Courses
+deactivate Cou
+
+Con-->UI: List<CourseDTO> courses
+deactivate Con
+
+UI--> Man : Shows Courses and asks to choose the courses to open
+deactivate UI
+
+Man-> UI : Selects  courses
+activate UI
+
+UI-> Con: openingCourses(List<String> courseCodes))
+
+activate Con
+loop for each ID
+Con->Cou<<Repository>>: findbyCode(courseCode)
+activate Cou
+Cou-->Con: Course
+deactivate Cou
+Con->Cour: OpenCourse(course)
+
+activate Cour
+Cour->Cour:openCourse
+Cour->Con : status
+deactivate Cour
+
+Con->Cou<<Repository>>: add(Course)
+activate Cou
+Cou-> Cou: save(Course)
+Cou-->Con: Status change status
+end loop
+
+deactivate Cou
+
+Con-->UI: Status change status
+deactivate Con
+
+UI--> Man : Status change status
+deactivate UI
+deactivate Man
+@enduml

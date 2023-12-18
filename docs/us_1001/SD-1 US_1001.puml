@@ -1,0 +1,129 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":RegisterNewUserUI" as UI
+participant ":RegisterNewUserController" as Con
+participant Role as URS
+participant ":Password" as Pas
+database eCourseUserRepsitory as Us <<repository>>
+database RepositoryFactory as FAR <<repository>>
+participant "SB: StudentBuilder" as SB
+participant "TB: TeacherBuilder" as TB
+participant "MB: ManagerBuilder" as MB
+participant "Stu: Student" as Stu
+participant "Tch: Teacher" as Tch
+participant "Mng: Manager" as Mng
+
+Man -> UI : Starts registering a new User
+activate Man
+activate UI
+
+UI-> Con : getRoles()
+activate Con
+
+Con->FAR
+
+Con->URS: List<Role> Roles = getAllRoles()
+activate URS
+
+URS-->Con : Roles
+deactivate URS
+
+Con-->UI: RoleDto
+deactivate Con
+
+UI--> Man : Shows User roles and asks to select a user role
+deactivate UI
+
+Man-> UI : selects the intended role
+activate UI
+
+UI--> Man : requests user's data (name, address, contact, citizenNumber,id)
+deactivate UI
+
+Man-> UI : types requested data
+activate UI
+
+UI-->Man : asks the Password
+
+UI-> Con: pass = PasswordCreation()
+
+activate Con
+Con->Pas**: PasswordCreation()
+
+Con-->UI: pass
+deactivate Con
+
+UI->Con : createUser(fullName, shortName, role, email, password, status)
+activate Con
+
+note over Con
+    if it´s a student:
+end note
+
+
+
+
+Con->SB**: createStudent(name, grade, mecanographicNumber, nif, birthDate, \n fullName, shortName, role, email, password, status)
+activate SB
+
+SB->Stu**: build(name, grade, mecanographicNumber, nif, birthDate, \n fullName, shortName, role, email, password, status)
+deactivate SB
+
+note over Con
+    if it´s a teacher:
+end note
+
+
+Con->TB**: createTeacher(name, acronym, nif, birthDate, \n fullName, shortName, role, email, password, status)
+activate TB
+
+TB->Tch**: build(name, acronym, nif, birthDate, \n fullName, shortName, role, email, password, status)
+deactivate TB
+
+note over Con
+    if it´s a manager:
+end note
+
+Con-> MB**: createManager(name, fullName, shortName, \n role, email, password, status)
+activate MB
+
+MB->Mng**: build(name, fullName, shortName, \n role, email, password, status)
+deactivate MB
+
+deactivate Us
+
+Con --> UI : User
+deactivate Con
+
+UI--> Man : shows data and requests confirmation
+deactivate UI
+
+Man -> UI : confirms data
+activate UI
+
+UI->Con : saveUser(User, role, pass)
+activate Con
+
+
+
+Con->Us: add(User)
+
+
+activate Us
+Us-> Us: addUser(User)
+
+
+Us-->Con: User added successfully!
+deactivate Us
+
+Con-->UI: User added successfully!
+deactivate Con
+
+UI-->Man: User added successfully!
+deactivate UI
+@enduml

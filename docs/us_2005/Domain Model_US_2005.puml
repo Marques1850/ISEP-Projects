@@ -1,0 +1,107 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+left to right direction
+
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+
+package "COURSE" <<aggregate>> {
+    class Course <<root>> <<entity>> {
+        * name <<unique>>
+
+    }
+
+    enum CourseStatus <<enum>> {
+        + OPEN
+        + CLOSED
+    }
+
+    class CourseCode <<value object>>
+}
+
+package "EXAM" <<aggregate>> {
+    class Exam <<root>> <<event>> {
+        * code <<unique>>
+        * title <<unique>>
+        * openDate
+        * closeDate
+        * CourseCode
+    }
+
+    class ExamGrade <<value object>>
+
+}
+
+
+
+class ListGradesStudentService {
+}
+
+
+
+'Relationships
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+
+eCourseSystemUser --> ListGradesStudentService : use >
+
+eCourseSystemUser "*" -- "*" Exam : take a >
+
+
+Course --> "1" CourseStatus
+Course --> "1" CourseCode
+
+Course "1" -- "1" Grade : refers to <
+
+Course "*" - "*" eCourseSystemUser : is in a <
+
+Exam "1" -- "1" ExamGrade : has >
+Exam "*" -- "1" CourseCode : has >
+ExamGrade "1" -- "1" eCourseSystemUser : has >
+
+@enduml

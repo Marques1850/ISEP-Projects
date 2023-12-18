@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Teacher
+
+activate Teacher
+
+Teacher -> ":System": asks to create a new formstive exam
+
+activate ":System"
+":System" --> Teacher: asks for the exam code, coursecode, \nexam name, exam description, exam date, \n number of sections, type of questions in section, \n number of questions in section and section cotation
+deactivate ":System"
+
+Teacher -> ":System": provides the necessary data
+
+activate ":System"
+":System" --> Teacher: generate a formative exam using the information given \n by the user and get questions form the database and \n verify the formative exam and confirms the formative exam creation
+deactivate ":System"
+
+deactivate Teacher
+
+@enduml

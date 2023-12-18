@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Teacher as Man
+
+participant ":CreateFormativeExamUI" as UI
+participant ":CreateFormativeExamController" as Con
+database RepositoryFactory as FAR <<repository>>
+participant serviceGetQuestions as GetQ <<service>>
+database QuestionRepository as QR <<repository>>
+participant VerifyFormativeExamService as Ver <<service>>
+participant FormativeExamLexer as ExL
+participant FormativeExamParser as ExP
+participant FormativeExam as Ex <<entity>>
+database FormativeExamRepository as EMR <<service>>
+
+
+Man -> UI : Starts creating a new Formative Exam
+activate Man
+activate UI
+
+UI --> Man : asks for the exam code, coursecode, \nexam name, exam description, exam date, \n number of sections, type of questions in section, \n number of questions in section and section cotation
+deactivate UI
+
+Man -> UI : types the required data
+activate UI
+
+loop
+
+UI -> Con : createSection(type, numberOfQuestionsInSection, sectionDescription, questionCotation, sectionType);
+
+activate Con
+Con -> FAR
+
+Con -> GetQ : getQuestions(type, numberOfQuestionsInSection, questionRepository)
+
+activate GetQ
+GetQ -> QR : findbytype(type)
+activate QR
+QR -> QR : findbytype(type)
+QR --> GetQ : questions
+deactivate QR
+GetQ --> Con : questions
+deactivate GetQ
+
+Con -> Con : sections.add(sectionL);
+
+Con --> UI
+deactivate Con
+
+end loop
+
+UI -> Con : createFormativeExam(examName, examHeaderDescription, examDate, examCode, courseCode)
+activate Con
+Con -> Ver : verifyFormativeExam(fileName)
+
+activate Ver
+Ver -> ExL** :
+activate ExL
+Ver -> ExP** :
+activate ExP
+ExL --> Ver :
+ExP --> Ver :
+
+Ver -> Ver : verify(fileName)
+deactivate ExL
+deactivate ExP
+Ver --> Con :
+
+deactivate Ver
+
+Con -> Ex** : FormativeExam(examCode, exam, CourseCode.valueOf(courseCode))
+Con -> EMR : save(exam)
+activate EMR
+EMR -> EMR : save(exam)
+EMR --> Con :
+deactivate EMR
+Con --> UI :
+deactivate Con
+
+UI --> Man : confirm the creation of the formative exam was successfully
+deactivate UI
+@enduml

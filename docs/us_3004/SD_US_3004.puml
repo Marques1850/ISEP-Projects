@@ -1,0 +1,94 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as USR
+
+participant ":ShareBoardUI" as UI
+participant ":ShareBoardController" as Con
+participant ":ShareBoardServer" as SBS
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant "Board" as BOA
+database "UserRepository" as URR <<repository>>
+
+database BoardRepository as BRD <<repository>>
+
+USR -> UI : Starts asking to Share a Board
+activate USR
+activate UI
+UI->SBS : shareBoard()
+activate SBS
+SBS->SBS:ShareBoardController.getInstance()
+SBS-->UI : ShareBoardController
+deactivate SBS
+UI-> Con : getOwnedBoards()
+activate Con
+
+Con->AUTHZ : session()
+ activate AUTHZ
+ AUTHZ --> Con: session
+ deactivate AUTHZ
+
+ Con -> USS: authenticatedUser()
+ activate USS
+ USS --> Con: user
+ deactivate USS
+ Con->URR:searchUser(user.email)
+ activate URR
+ URR-->Con: euser
+ deactivate URR
+
+Con->BRD<<Repository>>: List<Board> boards=getallOwned(euser)
+activate BRD
+
+BRD-->Con : boards
+deactivate BRD
+
+Con-->UI: List<BoardDTO> boardsDTO
+deactivate Con
+
+UI--> USR : Shows Boards and asks to choose one
+deactivate UI
+USR->UI : Selects a Board
+activate UI
+loop while it isn't cancelled
+UI-->USR : ask for email
+USR->UI : enters email
+
+UI->Con : ValidateEmail(email)
+deactivate UI
+activate Con
+
+Con->URR<<Repository>> :searchUser(email)
+activate URR
+URR-->Con : user
+deactivate URR
+
+Con-->UI : boolean
+deactivate Con
+activate UI
+
+UI-->USR : validates email and shows permissions
+USR->UI : selects permissions
+
+UI->Con : share_Board(id,boardId, permissions)
+activate Con
+deactivate UI
+
+Con->BRD<<Repository>> :findByCode(boardID)
+activate BRD
+BRD-->Con : board
+deactivate BRD
+
+Con->BOA : share_Board(user, permissions)
+activate BOA
+BOA-->Con : status
+deactivate BOA
+Con-->UI : status
+deactivate Con
+activate UI
+UI-->USR : shows status
+end loop
+@enduml

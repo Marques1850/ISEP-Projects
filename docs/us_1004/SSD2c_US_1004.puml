@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to close courses
+activate ":System"
+":System" --> Man : Shows open courses
+deactivate ":System"
+
+Man --> ":System" : Selects courses
+
+activate ":System"
+":System"--> Man :verifies restrictions
+deactivate ":System"
+
+Man--> ":System" :confirms operation
+activate ":System"
+":System"-->Man : alters courses status to closed
+deactivate Man
+@enduml

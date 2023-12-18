@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to set course's Teachers
+activate ":System"
+":System" --> Man : asks for specific course
+deactivate ":System"
+
+Man --> ":System" : Selects Course
+
+activate ":System"
+":System"--> Man :Asks for Teachers to be set in course
+deactivate ":System"
+
+Man--> ":System" : Selects Teachers
+
+activate ":System"
+
+":System"--> Man :informs of operation success
+deactivate ":System"
+
+deactivate Man
+@enduml

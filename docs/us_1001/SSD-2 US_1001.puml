@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to Disable/Enable User Request
+
+activate ":System"
+":System"--> Man : asks for user's id
+deactivate ":System"
+
+Man--> ":System" : types the required data
+
+
+activate ":System"
+":System"-->Man : shows all data that was present in the \n database of the corresponding user
+deactivate ":System"
+
+Man --> ":System" : confirms the user's status to be changed
+
+
+activate ":System"
+":System" --> Man : shows the new status of the user and informs \n user's status has been changed successfully
+deactivate ":System"
+
+
+deactivate Man
+@enduml

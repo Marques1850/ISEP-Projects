@@ -1,0 +1,88 @@
+@startuml
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+
+package "COURSE" <<aggregate>> {
+package "COURSE" <<aggregate>> {
+    class Course <<root>> <<entity>> {
+        * name <<unique>>
+
+    }
+
+    enum CourseStatus <<enum>> {
+        + OPEN
+        + OPEN_ENROLLMENT
+        + CLOSED_ENROLLMENT
+        + CLOSED
+    }
+
+    class CourseCode <<value object>>
+}
+
+
+
+'Relationships
+
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+
+eCourseSystemUser "1" -- "*" Course : manages >
+
+eCourseSystemUser "1" -- "*" Course : Regent is in charge of >
+
+
+
+Course --> "1" CourseStatus
+Course --> "1" CourseCode
+
+Course "1" -- "1" Grade : refers to <
+Course "1" -- "0..*" Exam : related to <
+
+Course "1" - "*" Class : has >
+Course "*" - "*" eCourseSystemUser : teaches <
+
+@enduml

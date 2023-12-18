@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to archive a Shareboard
+
+activate ":System"
+":System" -> User: show boards that the user owns
+deactivate ":System"
+
+User -> ":System": selects the pretended board
+
+activate ":System"
+":System" -> User: Archives the board
+deactivate ":System"
+deactivate User
+
+@enduml

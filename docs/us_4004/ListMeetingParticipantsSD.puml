@@ -1,0 +1,53 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+
+actor eCourseSystemUser as Actor
+participant ListMeetingParticipantsUI as UI <<presentation>>
+participant ManageMeetingController as Controller <<application>>
+participant AuthenticationService as AUTH <<service>>
+
+
+database MeetingInviteRepository as Repository <<repository>>
+database MeetingRepository as Repository2 <<repository>>
+
+
+
+
+Actor --> UI: list meetings option
+activate UI
+UI -> Controller: create
+UI -> Controller: getAllParticipatingMeetings()
+    activate Controller
+    Controller -> AUTH: session()
+        activate AUTH
+        AUTH --> Controller: email
+        deactivate AUTH
+
+    Controller ->Repository2: getAllMeetingsWithParticipant(email)
+        activate Repository2
+        Repository2 --> Controller: List<Meeting>
+        deactivate Repository2
+    Controller --> UI: List<Meeting>
+    deactivate Controller
+    UI --> UI : displayMeetings( List<Meeting>)
+UI --> Actor: shows list of meetings
+deactivate UI
+Actor -> UI: select meeting
+activate UI
+UI -> Controller: getAllMeetingIvites( meetingId )
+    activate Controller
+    Controller ->Repository: searchByMeetingID( meetingID )
+        activate Repository
+        Repository --> Controller: List<MeetingInvite>
+        deactivate Repository
+    Controller --> UI: List<MeetingInvite>
+    deactivate Controller
+UI -> UI : displayMeetingInvites( List<MeetingInvite> )
+
+UI --> Actor : shows list of meeting invites
+deactivate UI
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as Usr
+
+participant "ViewBoardChangesUI" as UI
+participant "ViewBoardChangesController" as Con
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+database RepositoryFactory as FAR <<repository>>
+database BoardRepository  as SBR <<repository>>
+database BoardChangesRepository  as BCR <<repository>>
+database eCourseUserRepository   as ECUR <<repository>>
+participant "eCourseSystemUser" as ECSU
+
+
+
+Usr -> UI : Starts viewing Board Changes
+activate Usr
+activate UI
+
+UI-> Con: getBoards()
+activate Con
+
+Con -> FAR
+Con->AUTHZ : session()
+ activate AUTHZ
+ AUTHZ --> Con: session
+ deactivate AUTHZ
+
+ Con -> USS: authenticatedUser()
+ activate USS
+ USS --> Con: user
+ deactivate USS
+ Con-> ECSU:user.email()
+ activate ECSU
+ ECSU-->Con:email
+ deactivate ECSU
+Con->ECUR:SearchUser(email)
+activate ECUR
+ECUR-->Con:euser
+deactivate ECUR
+Con->SBR:getallOwned(euser)
+activate SBR
+SBR-->Con:boardsOwned
+Con->SBR:findBoeardsHiShared(euser)
+
+SBR-->Con:boardsShared
+deactivate SBR
+
+Con --> UI : boardsDTO
+deactivate Con
+
+
+UI--> Usr : shows the boards to select
+deactivate UI
+
+Usr -> UI : selects a board
+activate UI
+UI -> Con : getBoard(boardId)
+activate Con
+Con -> SBR :findbyCode(boardId)
+activate SBR
+SBR --> Con : board
+deactivate SBR
+deactivate Con
+
+UI -> Con: getBoardChanges()
+activate Con
+Con -> BCR:findByBoard(board)
+activate BCR
+BCR --> Con:boardChanges
+deactivate BCR
+Con --> UI:boardChangesDTO
+deactivate Con
+UI --> Usr:shows the board changes
+deactivate UI
+
+
+@enduml

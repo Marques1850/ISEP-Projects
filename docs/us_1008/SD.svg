@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="995px" preserveAspectRatio="none" style="width:1832px;height:995px;background:#FFFFFF;" version="1.1" viewBox="0 0 1832 995" width="1832px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="27.6094" id="_title" style="stroke:none;stroke-width:1.0;" width="214" x="808" y="10"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="204" x="813" y="29.5332">SSD - Request Enroll Student</text><rect fill="#FFFFFF" height="195.1094" style="stroke:#181818;stroke-width:1.0;" width="10" x="256.5" y="153.5703"/><rect fill="#FFFFFF" height="515.9766" style="stroke:#181818;stroke-width:1.0;" width="10" x="256.5" y="379.0313"/><rect fill="#FFFFFF" height="91.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="504.5" y="183.9219"/><rect fill="#FFFFFF" height="455.2734" style="stroke:#181818;stroke-width:1.0;" width="10" x="504.5" y="409.3828"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="897.5" y="561.1406"/><rect fill="#FFFFFF" height="151.7578" style="stroke:#181818;stroke-width:1.0;" width="10" x="897.5" y="682.5469"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1071" y="214.2734"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1071" y="621.8438"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1227.5" y="500.4375"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1394.5" y="773.6016"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1550.5" y="439.7344"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1780.5" y="712.8984"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="32" x2="32" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="261.5" x2="261.5" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="509.5" x2="509.5" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="902" x2="902" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1076" x2="1076" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1232" x2="1232" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1399" x2="1399" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1555" x2="1555" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1686" x2="1686" y1="121.2188" y2="913.0078"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1785" x2="1785" y1="121.2188" y2="913.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="5" y="118.1426">Student</text><ellipse cx="32.5" cy="52.1094" fill="#E3E3E3" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M32.5,60.1094 L32.5,87.1094 M19.5,68.1094 L45.5,68.1094 M32.5,87.1094 L19.5,102.1094 M32.5,87.1094 L45.5,102.1094 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="5" y="926.541">Student</text><ellipse cx="32.5" cy="938.1172" fill="#E3E3E3" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M32.5,946.1172 L32.5,973.1172 M19.5,954.1172 L45.5,954.1172 M32.5,973.1172 L19.5,988.1172 M32.5,973.1172 L45.5,988.1172 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164" x="179.5" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="95" x="214" y="92.5332">«presentation»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150" x="186.5" y="110.1426">RequestEnrollStudentUI</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164" x="179.5" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="95" x="214" y="933.541">«presentation»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150" x="186.5" y="951.1504">RequestEnrollStudentUI</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="214" x="402.5" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="467.5" y="92.5332">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="200" x="409.5" y="110.1426">RequestEnrollStudentController</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="214" x="402.5" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="467.5" y="933.541">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="200" x="409.5" y="951.1504">RequestEnrollStudentController</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="199" x="803" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="60" x="872.5" y="92.5332">«service»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="185" x="810" y="110.1426">RequestEnrollStudentService</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="199" x="803" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="60" x="872.5" y="933.541">«service»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="185" x="810" y="951.1504">RequestEnrollStudentService</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128" x="1012" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1036.5" y="92.5332">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114" x="1019" y="110.1426">CourseRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128" x="1012" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1036.5" y="933.541">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114" x="1019" y="951.1504">CourseRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="165" x="1150" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1193" y="92.5332">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="1157" y="110.1426">eCourseUserRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="165" x="1150" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1193" y="933.541">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="151" x="1157" y="951.1504">eCourseUserRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149" x="1325" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1360" y="92.5332">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135" x="1332" y="110.1426">EnrollmentRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149" x="1325" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="79" x="1360" y="933.541">«repository»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135" x="1332" y="951.1504">EnrollmentRepository</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143" x="1484" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="1513.5" y="92.5332">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="1491" y="110.1426">AuthorizationService</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143" x="1484" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="1513.5" y="933.541">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="1491" y="951.1504">AuthorizationService</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98" x="1637" y="71"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="1644" y="92.5332">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="1646.5" y="110.1426">UserSession</text><rect fill="#E3E3E3" height="49.2188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98" x="1637" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="84" x="1644" y="933.541">«application»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="1646.5" y="951.1504">UserSession</text><rect fill="#E3E3E3" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81" x="1745" y="88.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="1752" y="110.1426">Enrollment</text><rect fill="#E3E3E3" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81" x="1745" y="912.0078"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="1752" y="933.541">Enrollment</text><rect fill="#FFFFFF" height="195.1094" style="stroke:#181818;stroke-width:1.0;" width="10" x="256.5" y="153.5703"/><rect fill="#FFFFFF" height="515.9766" style="stroke:#181818;stroke-width:1.0;" width="10" x="256.5" y="379.0313"/><rect fill="#FFFFFF" height="91.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="504.5" y="183.9219"/><rect fill="#FFFFFF" height="455.2734" style="stroke:#181818;stroke-width:1.0;" width="10" x="504.5" y="409.3828"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="897.5" y="561.1406"/><rect fill="#FFFFFF" height="151.7578" style="stroke:#181818;stroke-width:1.0;" width="10" x="897.5" y="682.5469"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1071" y="214.2734"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1071" y="621.8438"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1227.5" y="500.4375"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1394.5" y="773.6016"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1550.5" y="439.7344"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="1780.5" y="712.8984"/><polygon fill="#181818" points="244.5,149.5703,254.5,153.5703,244.5,157.5703,248.5,153.5703" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="32.5" x2="250.5" y1="153.5703" y2="153.5703"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="173" x="39.5" y="148.7139">Requests to enroll in a course</text><polygon fill="#181818" points="492.5,179.9219,502.5,183.9219,492.5,187.9219,496.5,183.9219" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="498.5" y1="183.9219" y2="183.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="166" x="273.5" y="179.0654">listCoursesEnrollmentOpen()</text><polygon fill="#181818" points="1059,210.2734,1069,214.2734,1059,218.2734,1063,214.2734" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="1065" y1="214.2734" y2="214.2734"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="239" x="521.5" y="209.417">findAllWithStatus(OPEN_ENROLLMENT)</text><polygon fill="#181818" points="525.5,240.625,515.5,244.625,525.5,248.625,521.5,244.625" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="1075" y1="244.625" y2="244.625"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="78" x="531.5" y="239.7686">List&lt;Course&gt;</text><polygon fill="#181818" points="277.5,270.9766,267.5,274.9766,277.5,278.9766,273.5,274.9766" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="271.5" x2="508.5" y1="274.9766" y2="274.9766"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="98" x="283.5" y="270.1201">List&lt;CourseDto&gt;</text><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="308.5" y1="305.3281" y2="305.3281"/><line style="stroke:#181818;stroke-width:1.0;" x1="308.5" x2="308.5" y1="305.3281" y2="318.3281"/><line style="stroke:#181818;stroke-width:1.0;" x1="267.5" x2="308.5" y1="318.3281" y2="318.3281"/><polygon fill="#181818" points="277.5,314.3281,267.5,318.3281,277.5,322.3281,273.5,318.3281" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="273.5" y="300.4717">showCourses(Courses)</text><polygon fill="#181818" points="43.5,344.6797,33.5,348.6797,43.5,352.6797,39.5,348.6797" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="37.5" x2="260.5" y1="348.6797" y2="348.6797"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145" x="49.5" y="343.8232">Display List&lt;CourseDto&gt;</text><polygon fill="#181818" points="244.5,375.0313,254.5,379.0313,244.5,383.0313,248.5,379.0313" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="32.5" x2="250.5" y1="379.0313" y2="379.0313"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="98" x="39.5" y="374.1748">Choose a course</text><polygon fill="#181818" points="492.5,405.3828,502.5,409.3828,492.5,413.3828,496.5,409.3828" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="266.5" x2="498.5" y1="409.3828" y2="409.3828"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="219" x="273.5" y="404.5264">requestEnrollStudent(selectedCourse)</text><polygon fill="#181818" points="1538.5,435.7344,1548.5,439.7344,1538.5,443.7344,1542.5,439.7344" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="1544.5" y1="439.7344" y2="439.7344"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="521.5" y="434.8779">session()</text><polygon fill="#181818" points="525.5,466.0859,515.5,470.0859,525.5,474.0859,521.5,470.0859" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="1554.5" y1="470.0859" y2="470.0859"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="47" x="531.5" y="465.2295">Session</text><polygon fill="#181818" points="1215.5,496.4375,1225.5,500.4375,1215.5,504.4375,1219.5,500.4375" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="1221.5" y1="500.4375" y2="500.4375"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="105" x="521.5" y="495.5811">searchUser(email)</text><polygon fill="#181818" points="525.5,526.7891,515.5,530.7891,525.5,534.7891,521.5,530.7891" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="1231.5" y1="530.7891" y2="530.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27" x="531.5" y="525.9326">User</text><polygon fill="#181818" points="885.5,557.1406,895.5,561.1406,885.5,565.1406,889.5,561.1406" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="891.5" y1="561.1406" y2="561.1406"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="85" x="521.5" y="556.2842">getUserMeca()</text><polygon fill="#181818" points="525.5,587.4922,515.5,591.4922,525.5,595.4922,521.5,591.4922" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="901.5" y1="591.4922" y2="591.4922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="88" x="531.5" y="586.6357">mecanographic</text><polygon fill="#181818" points="1059,617.8438,1069,621.8438,1059,625.8438,1063,621.8438" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="1065" y1="621.8438" y2="621.8438"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="521.5" y="616.9873">findByCode(courseCode)</text><polygon fill="#181818" points="525.5,648.1953,515.5,652.1953,525.5,656.1953,521.5,652.1953" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="1075" y1="652.1953" y2="652.1953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="41" x="531.5" y="647.3389">Course</text><polygon fill="#181818" points="885.5,678.5469,895.5,682.5469,885.5,686.5469,889.5,682.5469" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="514.5" x2="891.5" y1="682.5469" y2="682.5469"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="364" x="521.5" y="677.6904">requestEnrollStudent(course, mecanographic, EnrollmentRepo)</text><polygon fill="#181818" points="1768.5,708.8984,1778.5,712.8984,1768.5,716.8984,1772.5,712.8984" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="907.5" x2="1774.5" y1="712.8984" y2="712.8984"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="232" x="914.5" y="708.042">new Enrollment(course, mecanographic)</text><polygon fill="#181818" points="918.5,739.25,908.5,743.25,918.5,747.25,914.5,743.25" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="912.5" x2="1784.5" y1="743.25" y2="743.25"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="60" x="924.5" y="738.3936">enrollment</text><polygon fill="#181818" points="1382.5,769.6016,1392.5,773.6016,1382.5,777.6016,1386.5,773.6016" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="907.5" x2="1388.5" y1="773.6016" y2="773.6016"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="94" x="914.5" y="768.7451">save(enrollment)</text><polygon fill="#181818" points="918.5,799.9531,908.5,803.9531,918.5,807.9531,914.5,803.9531" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="912.5" x2="1398.5" y1="803.9531" y2="803.9531"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="924.5" y="799.0967">true</text><polygon fill="#181818" points="525.5,830.3047,515.5,834.3047,525.5,838.3047,521.5,834.3047" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="519.5" x2="901.5" y1="834.3047" y2="834.3047"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="531.5" y="829.4482">true</text><polygon fill="#181818" points="277.5,860.6563,267.5,864.6563,277.5,868.6563,273.5,864.6563" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="271.5" x2="508.5" y1="864.6563" y2="864.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="153" x="283.5" y="859.7998">Request sent successfully</text><polygon fill="#181818" points="43.5,891.0078,33.5,895.0078,43.5,899.0078,39.5,895.0078" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="37.5" x2="260.5" y1="895.0078" y2="895.0078"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="200" x="49.5" y="890.1514">Display Request sent successfully</text><!--MD5=[f9be719d50c99384e574b114554c6d94]
+@startuml
+'https://plantuml.com/skinparam
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SSD - Request Enroll Student
+
+actor Student as Actor
+participant RequestEnrollStudentUI as UI <<presentation>>
+participant RequestEnrollStudentController as Controller <<application>>
+participant RequestEnrollStudentService as Service <<service>>
+participant CourseRepository as CourseRepo <<repository>>
+participant eCourseUserRepository as UserRepo <<repository>>
+participant EnrollmentRepository as EnrollmentRepo <<repository>>
+participant AuthorizationService as Authz <<application>>
+participant UserSession as USS <<application>>
+
+Actor -> UI: Requests to enroll in a course
+activate UI
+
+UI -> Controller: listCoursesEnrollmentOpen()
+activate Controller
+Controller -> CourseRepo: findAllWithStatus(OPEN_ENROLLMENT)
+activate CourseRepo
+CourseRepo - -> Controller: List<Course>
+deactivate CourseRepo
+Controller - -> UI: List<CourseDto>
+deactivate Controller
+
+
+    UI -> UI: showCourses(Courses)
+    UI - -> Actor: Display List<CourseDto>
+    deactivate UI
+    Actor -> UI: Choose a course
+    activate UI
+    UI -> Controller: requestEnrollStudent(selectedCourse)
+    activate Controller
+    Controller -> Authz: session()
+    activate Authz
+    Authz - -> Controller: Session
+    deactivate Authz
+    Controller -> UserRepo: searchUser(email)
+    activate UserRepo
+    UserRepo - -> Controller: User
+    deactivate UserRepo
+    Controller -> Service: getUserMeca()
+    activate Service
+    Service - -> Controller: mecanographic
+    deactivate Service
+    Controller -> CourseRepo: findByCode(courseCode)
+    activate CourseRepo
+    CourseRepo - -> Controller: Course
+    deactivate CourseRepo
+    Controller -> Service: requestEnrollStudent(course, mecanographic, EnrollmentRepo)
+    activate Service
+    Service -> Enrollment: new Enrollment(course, mecanographic)
+    activate Enrollment
+    Enrollment - -> Service: enrollment
+    deactivate Enrollment
+    Service -> EnrollmentRepo: save(enrollment)
+    activate EnrollmentRepo
+    EnrollmentRepo - -> Service: true
+    deactivate EnrollmentRepo
+    Service - -> Controller: true
+    deactivate Service
+    Controller - -> UI: Request sent successfully
+    deactivate Controller
+    UI - -> Actor: Display Request sent successfully
+    deactivate UI
+
+
+@enduml
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SSD - Request Enroll Student
+
+actor Student as Actor
+participant RequestEnrollStudentUI as UI <<presentation>>
+participant RequestEnrollStudentController as Controller <<application>>
+participant RequestEnrollStudentService as Service <<service>>
+participant CourseRepository as CourseRepo <<repository>>
+participant eCourseUserRepository as UserRepo <<repository>>
+participant EnrollmentRepository as EnrollmentRepo <<repository>>
+participant AuthorizationService as Authz <<application>>
+participant UserSession as USS <<application>>
+
+Actor -> UI: Requests to enroll in a course
+activate UI
+
+UI -> Controller: listCoursesEnrollmentOpen()
+activate Controller
+Controller -> CourseRepo: findAllWithStatus(OPEN_ENROLLMENT)
+activate CourseRepo
+CourseRepo - -> Controller: List<Course>
+deactivate CourseRepo
+Controller - -> UI: List<CourseDto>
+deactivate Controller
+
+
+    UI -> UI: showCourses(Courses)
+    UI - -> Actor: Display List<CourseDto>
+    deactivate UI
+    Actor -> UI: Choose a course
+    activate UI
+    UI -> Controller: requestEnrollStudent(selectedCourse)
+    activate Controller
+    Controller -> Authz: session()
+    activate Authz
+    Authz - -> Controller: Session
+    deactivate Authz
+    Controller -> UserRepo: searchUser(email)
+    activate UserRepo
+    UserRepo - -> Controller: User
+    deactivate UserRepo
+    Controller -> Service: getUserMeca()
+    activate Service
+    Service - -> Controller: mecanographic
+    deactivate Service
+    Controller -> CourseRepo: findByCode(courseCode)
+    activate CourseRepo
+    CourseRepo - -> Controller: Course
+    deactivate CourseRepo
+    Controller -> Service: requestEnrollStudent(course, mecanographic, EnrollmentRepo)
+    activate Service
+    Service -> Enrollment: new Enrollment(course, mecanographic)
+    activate Enrollment
+    Enrollment - -> Service: enrollment
+    deactivate Enrollment
+    Service -> EnrollmentRepo: save(enrollment)
+    activate EnrollmentRepo
+    EnrollmentRepo - -> Service: true
+    deactivate EnrollmentRepo
+    Service - -> Controller: true
+    deactivate Service
+    Controller - -> UI: Request sent successfully
+    deactivate Controller
+    UI - -> Actor: Display Request sent successfully
+    deactivate UI
+
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 19:12:26 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

@@ -1,0 +1,93 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SD - List courses available
+
+actor eCourseSystemUser as Actor
+participant ScheduleMeetingUI as UI <<presentation>>
+participant ScheduleMeetingController as Controller <<application>>
+participant AuthenticationService as AUTH <<service>>
+participant ScheduleMeetingService as SRV <<service>>
+
+participant Meeting as MET
+database eCourseUserRepository as Repository <<repository>>
+database MeetingRepository as Repository2 <<repository>>
+participant InviteMeetingEvent as INV
+participant EventPublisher as PUB
+
+
+
+Actor --> UI: schedule meeting option
+activate UI
+UI --> Actor: asks for a date
+Actor --> UI: date
+UI --> Actor: asks for a time
+Actor --> UI: time
+UI --> Actor: asks duration
+Actor --> UI: duration
+group loop
+UI --> Actor: asks for participants emails
+Actor --> UI: email
+end
+UI --> Actor: presents final list of participants
+Actor --> UI: confirms
+
+UI -> Controller: create
+
+UI -> Controller: scheduleMeeting( date,time, duration, List<Email> )
+    activate Controller
+    Controller -> AUTH: session()
+        activate AUTH
+        AUTH --> Controller: email
+        deactivate AUTH
+    Controller -> Repository: searchUser( email )
+        activate Repository
+        Repository --> Controller: owner
+        deactivate Repository
+
+    Controller -> SRV: validateParticipants( List<Email> )
+        activate SRV
+        group loop
+        SRV -> Repository:containsUser( Email )
+            activate Repository
+            deactivate Repository
+        end
+        SRV --> Controller: List<eCourseSystemUser>
+
+        deactivate SRV
+    Controller -> SRV : scheduleMeeting( date, time, duration, List<eCourseSystemUser>, owner )
+        activate SRV
+        SRV -> MET**: create
+        SRV --> Controller: meeting
+        deactivate SRV
+    Controller --> UI: meeting
+    deactivate Controller
+UI --> Actor: meeting
+deactivate UI
+Actor --> UI: save meeting
+activate UI
+UI -> Controller: saveMeeting( meeting )
+    activate Controller
+    Controller -> SRV: saveMeeting( meeting )
+        activate SRV
+
+
+        SRV -> Repository2: save
+            activate Repository2
+            deactivate Repository2
+        group loop : for each participant in meeting.participants()
+        SRV -> INV**: create( time, duration, recipient, sender )
+        SRV -> PUB : publish( event )
+        activate PUB
+        deactivate PUB
+        end
+        SRV --> Controller
+        deactivate SRV
+    Controller -->UI:
+    deactivate Controller
+
+UI-->Actor
+deactivate UI
+@enduml

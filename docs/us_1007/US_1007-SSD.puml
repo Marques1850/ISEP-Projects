@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : Asks to bulk enroll students in a course
+activate ":System"
+":System" --> Man : Shows Open Courses, asks to choose a course
+deactivate ":System"
+
+Man --> ":System" : Gives course's ID
+
+activate ":System"
+":System"--> Man :Asks for csv path
+deactivate ":System"
+
+Man--> ":System" : inputs csv path
+
+activate ":System"
+":System"-->Man : checks restriction verification
+deactivate ":System"
+Man --> ":System" : confirms
+
+activate ":System"
+":System"--> Man :informs of added students
+deactivate ":System"
+
+deactivate Man
+@enduml

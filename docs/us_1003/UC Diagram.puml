@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+actor Manager
+usecase "Open Enrollments in Courses" as OpenEnrollments
+usecase "Close Enrollments in Courses" as CloseEnrollments
+Manager --> OpenEnrollments
+Manager --> CloseEnrollments
+@enduml

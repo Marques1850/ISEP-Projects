@@ -1,0 +1,51 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+actor eCourseSystemUser as Actor
+participant ManageMeetingInviteUI as UI <<presentation>>
+participant ManageMeetingInviteController as Controller <<application>>
+participant AuthorizationService as AUTH <<service>>
+
+database MeetingInviteRepository as Repository3 <<repository>>
+
+
+
+
+Actor --> UI: respond to meeting invitations option
+activate UI
+UI -> Controller: getAllMeetingInvitations()
+    activate Controller
+    Controller -> AUTH : session()
+        activate AUTH
+        AUTH --> Controller : email
+        deactivate AUTH
+    Controller -> Repository3 : getAllMeetingInvitationsWithRecipient( email )
+        activate Repository3
+        Repository3 --> Controller : List<MeetingInvite>
+        deactivate Repository3
+    Controller -> UI : List<MeetingInvite>
+    deactivate Controller
+UI -> UI : displayMeetingInvitations( List<MeetingInvite> )
+UI-->Actor : shows list of meeting invitations
+deactivate UI
+Actor -> UI : select meeting invitation
+activate UI
+UI -> UI : displayMeetingInvitationsStates()
+UI -> Actor : asks for confirmation/rejection
+deactivate UI
+Actor -> UI : confirm/reject
+activate UI
+    UI -> Controller : alterMeetingInviteState( meetingInvite, inviteState )
+        activate Controller
+
+        Controller -> Repository3 : updateMeetingInviteState( meetingInvite, inviteState )
+            activate Repository3
+            Repository3 --> Controller : MeetingInvite
+            deactivate Repository3
+        Controller -> UI : state
+        deactivate Controller
+UI -> Actor : shows invitation confirmation/rejection
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+actor Student
+actor ListExamService
+
+
+Student -- (lists all future exames)
+(lists all future exames) ..> (Student) : <<extends>>
+(lists all future exames) -- ListExamService
+
+
+
+
+@enduml

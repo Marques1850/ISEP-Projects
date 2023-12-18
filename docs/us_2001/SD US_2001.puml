@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Teacher as Man
+
+participant ":CreateExamUI" as UI
+participant ":CreateExamController" as Con
+database RepositoryFactory as FAR <<repository>>
+participant VerifyExamService as Ver <<service>>
+participant ExamLexer as ExL
+participant ExamParser as ExP
+participant ExamReadFile as ERF
+participant Exam as Ex <<entity>>
+database ExamRepository as EMR <<service>>
+
+
+Man -> UI : Starts creating a new Exam
+activate Man
+activate UI
+
+UI --> Man : asks for the exam code, title, coursecode, open \n and close date and the txt exam file
+deactivate UI
+
+Man -> UI : types the exam code, title, coursecode, open \n and close date and the txt exam file
+activate UI
+UI -> Con : verifyExam(fileName)
+activate Con
+Con -> FAR :
+Con -> Ver : verifyExam(fileName)
+
+activate Ver
+Ver -> ExL** :
+activate ExL
+Ver -> ExP** :
+activate ExP
+ExL --> Ver :
+ExP --> Ver :
+
+Ver -> Ver : verify(fileName)
+deactivate ExL
+deactivate ExP
+Ver --> Con :
+
+deactivate Ver
+
+Con --> UI :
+deactivate Con
+
+UI -> Con : exmaDto = createExam(code, title, \n coursecode, openDate, closeDate, fileName)
+activate Con
+
+Con -> ERF : FileToString(finalPath)
+activate ERF
+ERF -> ERF : FileToString(finalPath)
+ERF --> Con : lines
+deactivate ERF
+
+
+Con -> Ex** : Exam(code, title, CourseCode.valueOf(courseCode), opendate, closedate, lines)
+Con -> EMR : save(exam)
+activate EMR
+EMR -> EMR : save(exam)
+EMR --> Con :
+deactivate EMR
+Con --> UI : examDto
+deactivate Con
+
+UI --> Man : shows the exam data and confirm the creation of the exam was successfully
+deactivate UI
+@enduml

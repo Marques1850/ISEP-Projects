@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Teacher
+
+activate Teacher
+
+Teacher -> ":System": asks to create a new question
+
+activate ":System"
+":System" --> Teacher: asks to select the question type
+deactivate ":System"
+
+Teacher -> ":System": selects the question type
+
+activate ":System"
+":System" --> Teacher: asks to enter the question txt file
+deactivate ":System"
+
+Teacher -> ":System": enters the question txt file
+
+activate ":System"
+":System" --> Teacher: verifies the question txt file and \n confirms the creation of the question
+deactivate ":System"
+
+deactivate Teacher
+
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class SystemUser <<root>> <<Entity>> {
+    * FullName
+    * ShortName
+}
+class Email <<Value object>>
+
+class CancelMeetingUI{
+    + displayMeetings( List<Meeting>)
+}
+class ManageMeetingController{
+    + getAllUserMeetings()
+    + cancelMeeting( meeting )
+}
+class CancelMeetingService{
+    + cancelMeeting( meeting )
+}
+class AuthenticationService{
+    + session()
+}
+class Meeting{
+    * time
+    * duration
+    * List<eCourseSystemUser>
+    * owner
+    + identity()
+}
+
+interface MeetingRepository{
+    + save( meeting )
+    + remove( meeting )
+    + getAllMeetingsWithOwner( email )
+}
+interface MeetingInviteRepository{
+    + searchByMeetingID( meetingID )
+    + remove( invite )
+}
+
+
+
+SystemUser - Email
+SystemUser -- Meeting
+SystemUser .. CancelMeetingUI
+CancelMeetingUI .. ManageMeetingController
+ManageMeetingController .. CancelMeetingService
+ManageMeetingController .. AuthenticationService
+ManageMeetingController .. MeetingRepository
+CancelMeetingService .. MeetingRepository
+CancelMeetingService .. MeetingInviteRepository
+CancelMeetingService .. Meeting
+
+@enduml

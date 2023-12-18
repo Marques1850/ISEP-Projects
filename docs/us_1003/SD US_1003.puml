@@ -1,0 +1,182 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":OpenCloseEnrollmentUI" as UI
+participant ":OpenCloseEnrollmentController" as Con
+database CourseRepsitory as URS <<repository>>
+participant "CS: Course" as CS
+database RepositoryFactory as RF <<repository>>
+
+
+
+Man -> UI : Starts opening/closing a enrollment
+activate Man
+activate UI
+
+UI-> Man : requests course code
+deactivate UI
+
+note over Man
+    if Course status is open:
+end note
+
+Man -> UI : types requested data
+activate UI
+
+UI->Con : verifyCourseExists(code)
+activate Con
+
+Con->RF : CourseRepository()
+activate RF
+
+RF-->Con : CourseRepository()
+deactivate RF
+
+Con->URS : verifyCourseExists(code)
+activate URS
+
+URS-->Con: true
+deactivate URS
+
+Con->URS : VerifyCourseIsActive(code)
+activate URS
+
+URS-->Con: CourseDto
+deactivate URS
+
+Con-->UI: CourseDto
+deactivate Con
+
+UI --> Man : Course exists and is active and asks to accept enrollments
+deactivate UI
+
+Man -> UI : confirms
+activate UI
+
+
+UI->Con : enableenrollments(code)
+activate Con
+
+Con->URS : enableenrollments(code)
+activate URS
+
+URS -> CS : enableenrollments(code)
+activate CS
+
+CS -> CS : enableenrollments(code)
+deactivate CS
+
+URS-->Con: true
+
+deactivate URS
+
+Con-->UI: true
+deactivate Con
+
+UI--> Man : shows new status of the course and asks for confirmation
+deactivate UI
+
+Man->UI : confirms
+activate UI
+
+UI->Con : saveSatusChange(CourseDto)
+activate Con
+
+Con->RF: add(Course)
+
+activate RF
+RF-> RF: save(Course)
+
+RF-->Con: Status change successfully!
+deactivate RF
+
+Con-->UI: Status change successfully!
+deactivate Con
+
+UI--> Man : Status change successfully!
+deactivate UI
+
+note over Man
+    if Course status is enrollment open:
+end note
+
+Man -> UI : types requested data
+activate UI
+
+UI->Con : verifyCourseExists(code)
+activate Con
+
+Con->RF : getCourseRepository()
+activate RF
+
+RF-->Con : CourseRepository()
+deactivate RF
+
+Con->URS : verifyCourseExists(code)
+activate URS
+
+URS-->Con: true
+deactivate URS
+
+Con->URS : VerifyCourseIsActiveAndEnrollment(code)
+activate URS
+
+URS-->Con: CourseDto
+deactivate URS
+
+Con-->UI: CourseDto
+deactivate Con
+
+UI --> Man : Course exists and is accpeting enrollments and asks to disable enrollments
+deactivate UI
+
+Man -> UI : confirms
+activate UI
+
+
+UI->Con : disableenrollments(code)
+activate Con
+
+Con->URS : disableenrollments(code)
+activate URS
+
+URS -> CS : disableenrollments(code)
+activate CS
+
+CS -> CS : disableenrollments(code)
+deactivate CS
+
+URS-->Con: true
+
+deactivate URS
+
+Con-->UI: true
+deactivate Con
+
+UI--> Man : shows new status of the course and asks for confirmation
+deactivate UI
+
+Man->UI : confirms
+activate UI
+
+UI->Con : saveSatusChange(CourseDto)
+activate Con
+
+Con->RF: add(Course)
+
+activate RF
+RF-> RF: save(Course)
+
+RF-->Con: Status change successfully!
+deactivate RF
+
+Con-->UI: Status change successfully!
+deactivate Con
+
+UI--> Man : Status change successfully!
+deactivate UI
+@enduml

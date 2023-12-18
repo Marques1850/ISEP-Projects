@@ -1,0 +1,53 @@
+@startuml
+
+class Teacher <<root>> <<entity>> {
+* name
+}
+
+class SystemUser <<root>> <<Entity>> {
+    * FullName
+    * ShortName
+}
+
+class ScheduleExtraClassUI{
+    +createClassSchedule()
+    +display()
+}
+
+class ScheduleExtraClassController{
+    +createExtraClassSchedule()
+
+}
+
+class ScheduleExtraClassService{
+    + checkCoincidentialClasses(List<Class>)
+    + checkOverlappingClasses(List<Class>)
+    + checkTeacherAvailability(Teacher)
+}
+
+interface ExtraClassRepository{
+    +save(Class)
+    +getAllScheduledClasses()
+}
+
+class ExtraClass <<root>> <<entity>> {
+    * title <<unique>>
+    * date
+    * List<Student>
+}
+
+class Duration <<value object>>
+
+
+SystemUser "1" -left- "*" Teacher : is a <
+SystemUser "1" -- "1" ScheduleExtraClassService
+SystemUser -- ExtraClass
+
+SystemUser .. ScheduleExtraClassUI : interacts
+ScheduleExtraClassUI -- ScheduleExtraClassController
+ScheduleExtraClassController -- ScheduleExtraClassService
+ScheduleExtraClassService -- ExtraClassRepository
+ExtraClassRepository -- ExtraClass : repo
+ExtraClass -- Duration : has
+
+@enduml

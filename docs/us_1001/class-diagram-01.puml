@@ -1,0 +1,200 @@
+@startuml
+
+
+class eCourseSystemUser {
+    * EmailAdderess email
+    * UserStatus status
+    * List<Course> coursesTeaching
+    * List<Course> coursesTeached
+    * Acronym acronym
+    * NIF nif
+    * BirthDate birthDate
+    * Grade grade
+    * int mecanographicNumber
+    * SystemUser systemUser
+    + eCourseSystemUser(String: name, String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + eCourseSystemUser(String: name, boolean: regent, String: acronym, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n Role: role, Email: email, Password, password, boolean: status)
+    + Student(String: name, int: mecanographicNumber, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n  Role: role, Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+class ListUserService {
+    + findAllUsers(): List<User>
+}
+
+class UserRepository {
+    + addUser(user: user)
+    + removeUser(user: user)
+    + CreateUser(String: fullName, String: fhortName, \n  Role: role, Email: email, Password, password)
+    + searchUser(user: user): User
+    + alterUserStatus(User: user)
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class Role {
+    * String role
+    + Role(String: role)
+}
+
+class Password {
+    * String password
+    + Password(String: password)
+}
+
+class EmailAdderess {
+}
+
+class RegisterNewUserUI{
+    + getRoles(): List<Role>
+    + PasswordCreation() : pass
+    + createUser(String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + saveUser(SystemUser: user, Role: role, Password: pass)
+}
+
+class RegisterNewUserController{
+    + getAllRoles(): List<Role>
+    + PasswordCreation()
+    + CreateStudent(String: name, Grade: grade, int: mecanographicNumber, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n  Role: role, Email: email, Password, password, boolean: status)
+    + CreateTeacher(String: name, boolean: regent, String: acronym, \n  NIF: nif, BirthDate: birthDate, String: fullName, String: shortName, \n Role: role, Email: email, Password, password, boolean: status)
+    + CreateManager(String: name, String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + add(User: user)
+}
+
+class AlterUserStatusUI {
+    + searchUser(): User
+    + alterUserStatus(User: user)
+}
+
+class AlterUserStatusController {
+    + searchUser(): User
+    + alterUserStatus(User: user)
+}
+
+class ListSytemUsersUI {
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class ListSystemUsersController {
+    + totalNumberOfUsers(): int
+    + listSystemUsers(): List<User>
+}
+
+class StudentBuilder {
+    - fullName: String
+    - shortName: String
+    - role: Role
+    - email: Email
+    - password: Password
+    - status: UserStatus
+    - name: String
+    - grade: Grade
+    - mecanographicNumber: MecanographicNumber
+    - nif: NIF
+    - birthDate: BirthDate
+    + build()
+    + withFullName( fullName: String ): StudentBuilder
+    + withShortName( shortName: String ): StudentBuilder
+    + withRole( role: Role ): StudentBuilder
+    + withEmail( email: Email ): StudentBuilder
+    + withPassword( password: Password ): StudentBuilder
+    + withStatus( status: UserStatus ): StudentBuilder
+    + withName( name: String ): StudentBuilder
+    + withGrade( grade: Grade ): StudentBuilder
+    + withMecanographicNumber( mecanographicNumber: MecanographicNumber ): StudentBuilder
+    + withNIF( nif: NIF ): StudentBuilder
+    + withBirthDate( birthDate: BirthDate ): StudentBuilder
+}
+
+class TeacherBuilder {
+    - fullName: String
+    - shortName: String
+    - role: Role
+    - email: Email
+    - password: Password
+    - status: UserStatus
+    - name: String
+    - coursesTeached: List<Course>
+    - acronym: Acronym
+    - nif: NIF
+    - birthDate: BirthDate
+    + build()
+    + withFullName( fullName: String ): TeacherBuilder
+    + withShortName( shortName: String ): TeacherBuilder
+    + withRole( role: Role ): TeacherBuilder
+    + withEmail( email: Email ): TeacherBuilder
+    + withPassword( password: Password ): TeacherBuilder
+    + withStatus( status: UserStatus ): TeacherBuilder
+    + withName( name: String ): TeacherBuilder
+    + withCoursesTeached( coursesTeached: List<Course> ): TeacherBuilder
+    + withAcronym( acronym: Acronym ): TeacherBuilder
+    + withNIF( nif: NIF ): TeacherBuilder
+    + withBirthDate( birthDate: BirthDate ): TeacherBuilder
+}
+
+class ManagerBuilder {
+    - fullName: String
+    - shortName: String
+    - role: Role
+    - email: Email
+    - password: Password
+    - status: UserStatus
+    - name: String
+    + build()
+    + withFullName( fullName: String ): ManagerBuilder
+    + withShortName( shortName: String ): ManagerBuilder
+    + withRole( role: Role ): ManagerBuilder
+    + withEmail( email: Email ): ManagerBuilder
+    + withPassword( password: Password ): ManagerBuilder
+    + withStatus( status: UserStatus ): ManagerBuilder
+    + withName( name: String ): ManagerBuilder
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+
+
+
+'Relationships
+
+SystemUser -- Password
+SystemUser -right- EmailAdderess
+SystemUser -right- Role
+
+eCourseSystemUser -- SystemUser
+eCourseSystemUser -- EmailAdderess
+eCourseSystemUser -- Role
+eCourseSystemUser -- UserStatus
+
+SystemUser -left- UserRepository
+eCourseSystemUser .. RegisterNewUserUI
+RegisterNewUserUI .. RegisterNewUserController
+RegisterNewUserController .down. Role
+RegisterNewUserController .. UserRepository
+RegisterNewUserController .. Password
+RegisterNewUserController .. Student
+RegisterNewUserController .right. Teacher
+RegisterNewUserController .. Manager
+RegisterNewUserController --> StudentBuilder
+RegisterNewUserController --> TeacherBuilder
+RegisterNewUserController --> ManagerBuilder
+StudentBuilder --> eCourseSystemUser : builds
+TeacherBuilder --> eCourseSystemUser : builds
+ManagerBuilder --> eCourseSystemUser : builds
+SystemUserbuilder --> SystemUser : builds
+
+eCourseSystemUser .. AlterUserStatusUI
+AlterUserStatusUI .. AlterUserStatusController
+AlterUserStatusController .. UserRepository
+
+eCourseSystemUser .. ListSytemUsersUI
+ListSytemUsersUI .. ListSystemUsersController
+ListSystemUsersController .. UserRepository
+ListSystemUsersController .. ListUserService
+
+
+@enduml

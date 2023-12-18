@@ -1,0 +1,90 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Manager as Man
+
+participant ":CreateNewCourseUI" as UI
+participant ":CreateNewCourseController" as Con
+database CourseRepsitory as URS <<repository>>
+database UserRepsitory as Us <<repository>>
+participant "CB: CourseBuilder" as CB
+participant "Cs: Course" as Cs
+
+
+Man -> UI : Starts creating a new Course
+activate Man
+activate UI
+
+UI-> Man : requests course data (code, name, minStudents, maxStudents, description)
+deactivate UI
+
+Man -> UI : types requested data
+activate UI
+
+UI->Con : verifyCourse(id)
+activate Con
+
+Con->URS : verifyCourse(id)
+activate URS
+
+URS-->Con: false
+deactivate URS
+
+Con-->UI: false
+deactivate Con
+
+UI --> Man : Course don't exist and asks for regent teacher
+deactivate UI
+
+Man -> UI : types regent teacher id
+activate UI
+
+UI->Con : existTeacher(id)
+activate Con
+
+Con->Us : existTeacher(id)
+activate Us
+
+Us-->Con: teacher
+deactivate Us
+
+UI->Con : createCourse(code, name, minStudents, maxStudents, description, regent)
+
+Con->URS : createCourse(code, name, minStudents, maxStudents, description, regent)
+activate URS
+
+URS-> CB**: createCourse(code, name, minStudents, maxStudents, description, regent)
+activate CB
+
+CB-->Cs**: build(code, name, minStudents, maxStudents, description, regent)
+deactivate CB
+deactivate URS
+
+Con --> UI : Course
+deactivate Con
+
+UI--> Man : shows data and requests confirmation
+deactivate UI
+
+Man -> UI : confirms data
+activate UI
+
+UI->Con : saveCourse(Course)
+activate Con
+
+Con->URS: add(Course)
+
+activate URS
+URS-> URS: addCourse(Course)
+
+URS-->Con: Course added successfully!
+deactivate URS
+
+Con-->UI: Course added successfully!
+deactivate Con
+
+UI-->Man: Course added successfully!
+deactivate UI
+@enduml

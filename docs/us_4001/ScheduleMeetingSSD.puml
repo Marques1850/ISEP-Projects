@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+
+actor User as usr
+
+activate usr
+usr--> ":System" : schedule meeting option
+
+
+activate ":System"
+":System"--> usr : asks for meeting date, time and duration
+deactivate ":System"
+
+usr--> ":System" : gives date, time and duration
+activate ":System"
+
+group loop
+":System" --> usr : asks for meeting participants
+deactivate ":System"
+
+usr --> ":System" : selects participants
+
+activate ":System"
+end
+":System"--> usr : presents final list
+
+deactivate ":System"
+usr --> ":System" : confirms list
+
+activate ":System"
+":System"--> usr : presents Meeting details
+deactivate ":System"
+
+deactivate ":System"
+usr --> ":System" : confirms Meeting
+
+activate ":System"
+":System"--> usr : informs Meeting saved and invitations sent
+deactivate ":System"
+
+deactivate usr
+@enduml

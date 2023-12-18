@@ -1,0 +1,75 @@
+@startuml
+
+
+class eCourseSystemUser {
+    * String fullName
+    * String shortName
+    * Role role
+    * Email email
+    * Password password
+    * UserStatus status
+    * List<Course> coursesTeached
+    * List<Course> coursesTeaching
+    * NIF nif
+    * Acronym acronym
+    + eCourseSystemUser(String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+
+class CourseRepository {
+    + addCourse(Course: Course)
+    + removeCourse(Course: Course)
+    + findall(): List<Course>
+    +findAllOpen() : List<Course>
+    +findAllClosed(): List<Course>
+}
+
+
+class userRepository {
+    + adduser(user: user)
+    + removeuser(user: user)
+    + searchuser(user: user): user
+    + alteruserStatus(user: user)
+    + totalNumberOfusers(): int
+    + listSystemusers(): List<user>
+    +getopenusers() : List<user>
+    +getclosedusers() : List<user>
+}
+
+
+class SetTeachersCourseUI{
+    + SetTeachersinCourse()
+    +getCourses() :List<CourseDTO>
+    +getTeachers() :List<userDTO>
+
+}
+
+class SetTeachersCourseController{
+ + SetTeachersinCourse()
+ +getall() :List<Course>
+ +getallTeachers() :List<user>
+}
+
+class TeachersinCourseService {
+    + addCourse()
+}
+
+
+
+'Relationships
+
+eCourseSystemUser -- Password
+eCourseSystemUser -right- Email
+eCourseSystemUser -right- Role
+eCourseSystemUser -right- UserStatus
+
+eCourseSystemUser .. SetTeachersCourseUI:"if Manager user"
+SetTeachersCourseUI .. SetTeachersCourseController
+SetTeachersCourseController .. CourseRepository
+SetTeachersCourseController .. userRepository
+SetTeachersCourseController .. TeachersinCourseService
+TeachersinCourseService .. eCourseSystemUser:"if Teacher,\nget altered"
+
+
+@enduml

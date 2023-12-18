@@ -1,0 +1,370 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+hide circle
+hide methods
+
+left to right direction
+
+
+
+'Classes
+
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+
+package "COURSE" <<aggregate>> {
+    class Course <<root>> <<entity>> {
+        * name <<unique>>
+
+    }
+
+    enum CourseStatus <<enum>> {
+        + OPEN
+        + CLOSED
+    }
+
+    class CourseCode <<value object>>
+}
+
+package "ENROLLMENT" <<aggregate>> {
+    class Enrollment <<root>> <<entity>> {
+        * id <<unique>> <<automatically generated>>
+    }
+
+    enum EnrollmentStatus <<enum>> {
+        + PENDING
+        + APPROVED
+        + REJECTED
+    }
+}
+
+package "CLASS" <<aggregate>> {
+    class Class <<root>> <<event>> {
+        * title <<unique>>
+        * date
+    }
+
+    class Duration <<value object>>
+}
+
+package "EXAM" <<aggregate>> {
+    class Exam <<root>> <<event>> {
+        * code <<unique>>
+        * title <<unique>>
+        * openDate
+        * closeDate
+        * CourseCode
+    }
+
+    class FormativeExam <<root>> <<event>> {
+            * code <<unique>>
+            * CourseCode
+    }
+
+    class ExamGrade <<value object>>
+
+}
+
+package "QUESTION" <<aggregate>> {
+    class Question <<root>> <<event>> {
+        * id <<unique>>
+        * content
+    }
+
+    class QuestionType <<enum>>{
+        + MULTIPLE_CHOICE
+        + TRUE_OR_FALSE
+        + SHORT_ANSWER
+        + MATCHING
+    }
+
+}
+
+package "SHAREBOARD" <<aggregate>> {
+    class Board <<root>> <<entity>> {
+        * id <<unique>> <<automatically generated>>
+        * boradName
+        * maxRows
+        * maxColumns
+    }
+
+    class Cell <<entity>> {
+        * id
+        * content
+    }
+
+    class ColumnCell <<entity>> {
+        * id
+        * columnTittle
+        * column
+    }
+
+    class RowCell <<entity>> {
+        * id
+        * rowTittle
+        * row
+    }
+    class BoardChanges <<entity>> {
+        * id
+        * content
+        * BoardChanges
+    }
+    class BoardChangedEvent <<event>> {
+    }
+
+    BoardChanges "1" -- "1" BoardChangedEvent
+    Board "1" -- "*" BoardChanges
+}
+
+package "Post-It" <<agreggate>> {
+
+    class PostIt <<root>> <<entity>> {
+        * id
+        * row
+        * column
+        * content
+        * ownUser
+    }
+
+    class Content <<value object>> {
+        * content
+    }
+}
+
+package "MEETING" <<aggregate>> {
+    class Meeting <<root>> <<event>> {
+        * date
+        * time
+        * duration
+    }
+
+}
+
+'Services
+
+class ListUserService <<service>>
+
+class TeachersInCourseService <<service>>
+
+class CourseListService <<service>>
+
+class ListStudentsInCourseService <<service>>
+
+class StudentBulkEnrollmentService <<service>>
+
+class ListGradesStudentService <<service>>
+
+package "EXAM" <<aggregate>> {
+
+class ListExamService <<service>>
+
+class ListGradesService <<service>>
+
+class ListExamCoursesService <<service>>
+
+class ListGradesCoursesService <<service>>
+
+class BoardHistoryService <<service>>
+
+class MeetingParticipantsService <<service>>
+
+class VerifyExamService <<service>>
+
+class VerifyFormativeExamService <<service>>
+
+class VerifyQuestionService <<service>>
+
+class VerifQuestionService <<service>>
+
+class TakeExamService <<service>>
+
+class ListExamCoursesService <<service>>
+
+class TakeFormativeExamService <<service>>
+
+class ListFormativeExamCoursesService <<service>>
+
+class CreatePostItService <<service>>
+
+
+
+
+
+'Relationships
+
+SystemUser -left-> "1" EmailAdderss
+SystemUser -left-> "1" Password
+SystemUser -left-> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+
+ExamGrade "1" -- "1" eCourseSystemUser : has >
+
+eCourseSystemUser "1" -- "*" eCourseSystemUser : manages >
+eCourseSystemUser "1" -- "*" Course : manages >
+eCourseSystemUser "1" -- "*" Enrollment : manages >
+eCourseSystemUser "1" -- "*" Course : Regent is in charge of >
+
+eCourseSystemUser "*" -- "*" Exam : Student takes >
+eCourseSystemUser "*" -- "*" FormativeExam : Student take a >
+eCourseSystemUser "*" -- "*" Enrollment : Student requests >
+eCourseSystemUser "*" -left- "*" Class : Student participates in >
+
+eCourseSystemUser "1" -- "*" Exam : Teacher creates >
+eCourseSystemUser "1" -- "*" Question : Teacher creates >
+eCourseSystemUser "1" -- "*" FormativeExam : Teacher creates >
+eCourseSystemUser "1" -left- "*" Class : Teacher schedules >
+
+
+FormativeExam "1" -- "1" ExamGrade : has >
+FormativeExam "*" -- "1" CourseCode : has >
+
+
+
+eCourseSystemUser "1" -- "*" SharedBoard : owns >
+eCourseSystemUser "1"-left- "1" SharedBoard : archives >
+
+eCourseSystemUser "1" -right- "*" Meeting : schedules >
+eCourseSystemUser "*" -right- "*" Meeting : invited to >
+
+
+
+
+Course --> "1" CourseStatus
+Course --> "1" CourseCode
+
+Course "1" -- "1" Grade : refers to <
+Course "1" -- "0..*" Exam : related to <
+Course "1" -- "0..*" FormativeExam : related to <
+
+Course "1" - "*" Class : has >
+Course "*" - "*" eCourseSystemUser : teacher teaches <
+Course "*" - "*" eCourseSystemUser : student is in a <
+
+
+
+Enrollment --> "1" EnrollmentStatus
+Enrollment "*" -- "1" Course : relative to >
+
+
+
+
+Class --> "1" Duration
+
+
+
+
+eCourseSystemUser --> "*" Board : owns >
+eCourseSystemUser --> "*" Board : shared to <
+eCourseSystemUser --> "*" PostIt : creates a >
+eCourseSystemUser --> "*" PostIt : updates a >
+eCourseSystemUser --> "*" PostIt : deletes a >
+eCourseSystemUser --> "*" Content : creates a >
+eCourseSystemUser --> "*" Content : updates a >
+eCourseSystemUser --> "*" Content : deletes a >
+
+
+
+
+Board "1" -left- "1..20" RowCell : has >
+Board "1" -left- "1..10" ColumnCell : has >
+Board "1" -left- "*" PostIt : has >
+
+
+
+ColumnCell -left-|> Cell
+RowCell -left-|> Cell
+
+
+
+PostIt "*" -left- "*" Content : contains >
+PostIt "*" -left- "*" eCourseSystemUser : owns <
+
+
+
+
+Exam "1" -- "1" ExamGrade : has >
+Exam "*" -- "1" CourseCode : has >
+Exam "*" -- "*" ExamGrade : has >
+ExamGrade "*" -- "1" eCourseSystemUser : has >
+
+
+PostIt "*" -- "*" Content : contains >
+PostIt "*" -- "*" eCourseSystemUser : owns <
+
+
+
+Grade "1" -right- "1..*" ExamGrade : is calculated with >
+
+
+
+
+'Service Relationships
+
+eCourseSystemUser "1" -left- "*" ListUserService : use >
+eCourseSystemUser "1" -right- "*" TeachersInCourseService : use >
+eCourseSystemUser "1" -left- "*" StudentBulkEnrollmentService : use >
+eCourseSystemUser "1" -left- "*" ListGradesStudentService : use >
+eCourseSystemUser "1" -left- "*" MagnamentEnrollmentService : use >
+eCourseSystemUser "1" -right- "*" CourseListService : use >
+eCourseSystemUser "1" -left- "1" BoradHistoryService : see history of >
+eCourseSystemUser "1" -left- "*" VerifyExamService : Teacher use >
+eCourseSystemUser "1" -- "*" VerifyFormativeExamService : Teacher use >
+eCourseSystemUser "1" -- "*" VerifyQuestionService : Teacher use >
+eCourseSystemUser "1" -right- "*" BoradHistoryService : uses >
+eCourseSystemUser "1" -- "*" ListStudentsInCourseService : use >
+eCourseSystemUser "*" -- "*" ListFutureExamService : Student use >
+eCourseSystemUser "*" -- "*" ListGradesService : Student use >
+eCourseSystemUser "*" -- "*" ListExamCoursesService : Teacher use >
+eCourseSystemUser "*" -- "*" ListGradesCoursesService : Teacher use >
+eCourseSystemUser "1" -- "*" MeetingParticipantsService : use >
+eCourseSystemUser --> TakeExamService : use >
+eCourseSystemUser --> ListExamCoursesService : use >
+eCourseSystemUser --> VerifQuestionService : uses >
+eCourseSystemUser --> TakeFormativeExamService : use >
+eCourseSystemUser --> ListFormativeExamCoursesService : use >
+eCourseSystemUser --> CreatePostItService : use >
+
+
+@enduml

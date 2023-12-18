@@ -1,0 +1,95 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+actor Manager as Actor
+
+participant "ApproveApplicationUI" as UI <<presentation>>
+participant "ApproveApplicationController" as Controller <<application>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant "ApproveApplicationService" as SERVICE <<service>>
+'participant "Manager" as Manager
+
+database "ApplicationRepository" as Repository <<repository>>
+
+activate Actor
+Actor --> UI :List Applications for Approval
+activate UI
+
+UI -> Controller: create
+activate Controller
+deactivate Controller
+
+UI -> Controller: listPendingApplications()
+activate Controller
+
+Controller -> AUTHZ: session()
+activate AUTHZ
+AUTHZ --> Controller: session
+deactivate AUTHZ
+
+Controller -> USS: authenticatedUser()
+activate USS
+USS --> Controller: user
+deactivate USS
+
+Controller -> SERVICE: create
+activate SERVICE
+deactivate SERVICE
+Controller -> SERVICE: listPendingApplications()
+activate SERVICE
+
+SERVICE -> Repository: findAllPendingApplications()
+activate Repository
+Repository --> SERVICE: List<Application>
+deactivate Repository
+
+SERVICE --> Controller: List<Application>
+deactivate SERVICE
+
+Controller --> UI: List<Application>
+deactivate Controller
+UI -> UI: display List<Application>
+
+loop for each application
+    UI --> Actor: Shows application
+    deactivate UI
+    Actor -> UI: Approve/Rejects Application
+    activate UI
+end
+
+UI -> Controller: List<Application>
+deactivate UI
+activate Controller
+
+Controller -> SERVICE: List<Application>
+deactivate Controller
+activate SERVICE
+
+SERVICE -> Repository: List<Application>
+deactivate SERVICE
+activate Repository
+
+Repository -> Repository: save(List<Application>)
+
+Repository --> SERVICE: state
+deactivate Repository
+
+activate SERVICE
+SERVICE --> Controller: state
+deactivate SERVICE
+
+activate Controller
+Controller --> UI: state
+deactivate Controller
+
+activate UI
+UI --> Actor: Show state of exectuion (Success or Failure)
+deactivate UI
+
+deactivate Actor
+
+@enduml

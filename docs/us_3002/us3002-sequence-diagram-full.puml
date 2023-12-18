@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/skinparam
+skinparam monochrome true
+skinparam packageStyle rect
+
+title SSD - Create Board
+
+actor User as Actor
+participant CreateBoardUI as UI <<presentation>>
+participant CreateBoardController as Controller <<application>>
+participant BoardRepository as BoardRepo <<repository>>
+participant eCourseUserRepository as UserRepo <<repository>>
+participant AuthorizationService as Authz <<application>>
+
+Actor -> UI: Requests to create a Board
+activate UI
+UI->Actor: asks for board name
+deactivate UI
+Actor -> UI: Provides board name
+activate UI
+UI -->Actor: Ask for max Rows
+deactivate UI
+Actor -> UI: Provides max Rows
+activate UI
+UI -->Actor: Ask for max Columns
+deactivate UI
+Actor -> UI: Provides max Columns
+activate UI
+
+    UI -> Controller: createBoard(boardName, maxRows, maxColumns)
+    activate Controller
+    Controller -> Authz: session()
+    activate Authz
+    Authz --> Controller: Session
+    deactivate Authz
+    Controller -> UserRepo: searchUser(email)
+    activate UserRepo
+    UserRepo --> Controller: User
+    deactivate UserRepo
+    Controller -> Board: board=new (boardName, maxRows, maxColumns, user)
+    activate Board
+    Board --> Controller: board
+    deactivate Board
+    Controller->BoardRepo: save(board)
+    activate BoardRepo
+    BoardRepo-->Controller: state
+    deactivate BoardRepo
+    deactivate Board
+    Controller --> UI: state
+    deactivate Controller
+    UI --> Actor: state
+    deactivate UI
+
+
+@enduml

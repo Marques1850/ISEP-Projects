@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Manager as Man
+
+activate Man
+Man--> ":System" : asks to open/close a enrollment
+
+activate ":System"
+":System"--> Man : asks for the course code
+deactivate ":System"
+
+Man--> ":System" : types the required code
+
+activate ":System"
+":System"-->Man : shows course exists and is open asks for status change
+deactivate ":System"
+
+Man----> ":System" : confirms the status change
+
+activate ":System"
+":System" --> Man : shows course and is new status \n and tells the operation was successful
+deactivate ":System"
+
+
+deactivate Man
+@enduml

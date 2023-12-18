@@ -1,0 +1,86 @@
+@startuml
+
+class Student <<root>> <<entity>> {
+}
+
+
+class ListGradesStudentsUI  {
+}
+
+class ListGradesStudentsController{
+    +listGradesStudents()
+}
+class ListGradesStudentService{
+    +listGradesStudents()
+}
+
+class AuthorizationService{
+    +session()
+}
+
+class UserSession{
+    +email()
+}
+
+class eCourseSystemUserRepository{
+    +searchUser(email)
+}
+
+class eCourseSystemUser{
+    +coursesLearning()
+}
+
+class ExamRepository{
+    +findAllOfCourse(course)
+}
+class ExamMapper{
+    +toDTO(exam)
+}
+class ExamDTO{
+    +code
+    +name
+    +description
+    +courseCode
+}
+class ExamGradeMapper{
+    +toDTO(examGrade)
+}
+class ExamGradeDTO{
+    +student
+    +grade
+}
+
+class Course{
+}
+
+class Exam{
+    +gradeByStudent()
+}
+
+
+eCourseSystemUser "1" -left- "*" Student : is a <
+
+eCourseSystemUser .. ListGradesStudentsUI : interacts
+ListGradesStudentsUI -- ListGradesStudentsController
+ListGradesStudentsController -- AuthorizationService
+ListGradesStudentsController -- ListGradesStudentService
+AuthorizationService -- UserSession
+UserSession -- eCourseSystemUserRepository
+eCourseSystemUserRepository -- eCourseSystemUser
+eCourseSystemUser "1"-- "*"Course
+ListGradesStudentsController .. Course
+ListGradesStudentsController .. eCourseSystemUser
+ListGradesStudentsController -- ExamRepository
+ExamRepository .. Course
+ExamRepository "1"-- "*" Exam
+Exam "1"--"1"  ExamGrade
+ListGradesStudentService .. Exam
+ListGradesStudentService .. eCourseSystemUser
+ListGradesStudentService .. ExamGrade
+ListGradesStudentService -- ExamGradeMapper
+ExamGradeMapper "1"-- "*" ExamGradeDTO
+ListGradesStudentService .. ExamGradeDTO
+ListGradesStudentService .. ExamMapper
+ExamMapper "1"-- "*" ExamDTO
+ListGradesStudentService .. ExamDTO
+@enduml

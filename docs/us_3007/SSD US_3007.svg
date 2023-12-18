@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="344.7px" preserveAspectRatio="none" style="width:376px;height:344px;background:#FFFFFF;" version="1.1" viewBox="0 0 376 344" width="376.2px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="171.4148" style="stroke:#181818;stroke-width:0.9;" width="9" x="15.75" y="83.3484"/><rect fill="#FFFFFF" height="42.0328" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="103.4648"/><rect fill="#FFFFFF" height="27.3164" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="172.8141"/><rect fill="#FFFFFF" height="27.3164" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="227.4469"/><line style="stroke:#181818;stroke-width:0.45;stroke-dasharray:5.0,5.0;" x1="19.8" x2="19.8" y1="74.3484" y2="270.9633"/><line style="stroke:#181818;stroke-width:0.45;stroke-dasharray:5.0,5.0;" x1="342.45" x2="342.45" y1="74.3484" y2="270.9633"/><text fill="#000000" font-family="sans-serif" font-size="12.6" lengthAdjust="spacing" textLength="26.1" x="4.5" y="71.5799">User</text><ellipse cx="20.25" cy="12.15" fill="#E2E2F0" rx="7.2" ry="7.2" style="stroke:#181818;stroke-width:0.45;"/><path d="M20.25,19.35 L20.25,43.65 M8.55,26.55 L31.95,26.55 M20.25,43.65 L8.55,57.15 M20.25,43.65 L31.95,57.15 " fill="none" style="stroke:#181818;stroke-width:0.45;"/><text fill="#000000" font-family="sans-serif" font-size="12.6" lengthAdjust="spacing" textLength="26.1" x="4.5" y="283.1432">User</text><ellipse cx="20.25" cy="293.5617" fill="#E2E2F0" rx="7.2" ry="7.2" style="stroke:#181818;stroke-width:0.45;"/><path d="M20.25,300.7617 L20.25,325.0617 M8.55,307.9617 L31.95,307.9617 M20.25,325.0617 L8.55,338.5617 M20.25,325.0617 L31.95,338.5617 " fill="none" style="stroke:#181818;stroke-width:0.45;"/><rect fill="#E2E2F0" height="28.4484" rx="2.25" ry="2.25" style="stroke:#181818;stroke-width:0.45;" width="57.6" x="313.65" y="45"/><text fill="#000000" font-family="sans-serif" font-size="12.6" lengthAdjust="spacing" textLength="45" x="319.95" y="64.3799">:System</text><rect fill="#E2E2F0" height="28.4484" rx="2.25" ry="2.25" style="stroke:#181818;stroke-width:0.45;" width="57.6" x="313.65" y="270.0633"/><text fill="#000000" font-family="sans-serif" font-size="12.6" lengthAdjust="spacing" textLength="45" x="319.95" y="289.4432">:System</text><rect fill="#FFFFFF" height="171.4148" style="stroke:#181818;stroke-width:0.9;" width="9" x="15.75" y="83.3484"/><rect fill="#FFFFFF" height="42.0328" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="103.4648"/><rect fill="#FFFFFF" height="27.3164" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="172.8141"/><rect fill="#FFFFFF" height="27.3164" style="stroke:#181818;stroke-width:0.9;" width="9" x="337.95" y="227.4469"/><polygon fill="#181818" points="327.15,99.8648,336.15,103.4648,327.15,107.0648,330.75,103.4648" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="24.75" x2="332.55" y1="103.4648" y2="103.4648"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="31.05" y="99.094">1</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="214.2" x="40.95" y="99.094">asks to update a Post-It in a Share board</text><polygon fill="#181818" points="34.65,141.8977,25.65,145.4977,34.65,149.0977,31.05,145.4977" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="29.25" x2="341.55" y1="145.4977" y2="145.4977"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="40.05" y="133.7687">2</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="179.1" x="49.95" y="126.4104">show boards that the user owns or</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="187.2" x="53.55" y="141.1269">boards that are shared with the user</text><polygon fill="#181818" points="327.15,169.2141,336.15,172.8141,327.15,176.4141,330.75,172.8141" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="24.75" x2="332.55" y1="172.8141" y2="172.8141"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="31.05" y="168.4433">3</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="144.9" x="40.95" y="168.4433">types the post-it information</text><polygon fill="#181818" points="34.65,196.5305,25.65,200.1305,34.65,203.7305,31.05,200.1305" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="29.25" x2="341.55" y1="200.1305" y2="200.1305"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="40.05" y="195.7597">4</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="272.7" x="49.95" y="195.7597">print the post-it information and asks for confirmation</text><polygon fill="#181818" points="327.15,223.8469,336.15,227.4469,327.15,231.0469,330.75,227.4469" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="24.75" x2="332.55" y1="227.4469" y2="227.4469"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="31.05" y="223.0761">5</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="138.6" x="40.95" y="223.0761">confirms the post-it update</text><polygon fill="#181818" points="30.15,251.1633,21.15,254.7633,30.15,258.3633,26.55,254.7633" style="stroke:#181818;stroke-width:0.9;"/><line style="stroke:#181818;stroke-width:0.9;" x1="24.75" x2="341.55" y1="254.7633" y2="254.7633"/><text fill="#000000" font-family="sans-serif" font-size="11.7" font-weight="bold" lengthAdjust="spacing" textLength="6.3" x="35.55" y="250.3925">6</text><text fill="#000000" font-family="sans-serif" font-size="11.7" lengthAdjust="spacing" textLength="281.7" x="45.45" y="250.3925">Informs that the post-it has been updated successfully</text><!--MD5=[bd3cca34ca16b940b7d584da1f0025c1]
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to update a Post-It in a Share board
+
+activate ":System"
+":System" -> User: show boards that the user owns or \n boards that are shared with the user
+deactivate ":System"
+
+User -> ":System": types the post-it information
+
+activate ":System"
+":System" -> User: print the post-it information and asks for confirmation
+deactivate ":System"
+
+User -> ":System": confirms the post-it update
+
+activate ":System"
+":System" -> User: Informs that the post-it has been updated successfully
+deactivate ":System"
+
+deactivate User
+
+@enduml
+
+@startuml
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to update a Post-It in a Share board
+
+activate ":System"
+":System" -> User: show boards that the user owns or \n boards that are shared with the user
+deactivate ":System"
+
+User -> ":System": types the post-it information
+
+activate ":System"
+":System" -> User: print the post-it information and asks for confirmation
+deactivate ":System"
+
+User -> ":System": confirms the post-it update
+
+activate ":System"
+":System" -> User: Informs that the post-it has been updated successfully
+deactivate ":System"
+
+deactivate User
+
+@enduml
+
+PlantUML version 1.2022.12(Sun Oct 23 19:12:26 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

@@ -1,0 +1,100 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Teacher as Man
+
+participant ":CreateQuestionUI" as UI
+participant ":CreateQuestionController" as Con
+database RepositoryFactory as FAR <<repository>>
+participant VerifyQuestionService as Ver <<service>>
+participant ExamLexer as ExL
+participant ExamParser as ExP
+participant ExamReadFile as ERF
+participant Question as Qu <<entity>>
+database QuestionRepository as QUR <<database>>
+
+
+Man -> UI : Starts creating a new Question
+activate Man
+activate UI
+UI ->UI : showTypeQuestions(perms)
+UI --> Man : asks to select the question type
+deactivate UI
+
+Man -> UI : selects the question type
+activate UI
+
+UI --> Man : asks to enter the question txt file
+deactivate UI
+
+Man -> UI : enters the question txt file
+activate UI
+
+UI -> Con : verifyQuestion(type, fileName);
+
+activate Con
+
+Con -> Ver : verifyQuestion(type, fileName);
+
+
+activate Ver
+
+Ver -> ExL** :
+activate ExL
+Ver -> ExP** :
+activate ExP
+ExL --> Ver :
+ExP --> Ver :
+
+Ver -> Ver : verifyQuestion(type, fileName);
+deactivate ExL
+deactivate ExP
+
+
+
+Ver --> Con
+
+deactivate Ver
+
+Con --> UI
+
+deactivate Con
+
+UI -> Con : createQuestion(type, fileName);
+
+activate Con
+
+Con -> ERF : FileToString(finalPath);
+
+activate ERF
+
+ERF -> ERF : FileToString(finalPath);
+
+ERF --> Con : lines
+
+deactivate ERF
+
+Con -> Qu** : Question(type, lines)
+
+Con -> QUR : saveQ(question)
+
+activate QUR
+
+QUR -> QUR : saveQ(question)
+
+QUR --> Con
+
+deactivate QUR
+
+Con --> UI : questionDto
+
+deactivate Con
+
+UI --> Man : shows the question data and \n confirm the creation of the \n question was successfully
+
+
+
+
+@enduml

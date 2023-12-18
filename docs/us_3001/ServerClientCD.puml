@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class SBPMessage <<protocol>>{
+    - COMMTEST
+    - DISCONN
+    - ACK
+    - ERR
+    - AUTH
+    - version
+    + type( SBPmessage )
+    + isValidSBPMessage( SBPmessage )
+    + encodeCommTest()
+    + encodeDisconn()
+    + encodeAck()
+    + encodeErr()
+    + encodeErr( errorMsg )
+    + encodeAuth( username, password )
+    + passwordFromAUTH( SBPmessage )
+    + usernameFromAUTH( SBPmessage )
+    + calculateDataLength( SBPmessage )
+}
+class SharedBoardApp <<CLIENT>>{
+    - dataWriter
+    - dataReader
+    + main()
+    + printSBPMessageCodes()
+    + receiveMessageOtherClients()
+    + sendMessageOtherClients()
+    + closeEverything( socket,  dataWriter,  dataReader )
+}
+class SharedBoardServer <<SERVER>>{
+    - serverSocket
+    + main()
+    + startServer()
+    + closeServerSocket()
+}
+class ServerClientHandler <<Comms beetwen server-client>>{
+    - socket
+    - dataWriter
+    - dataReader
+    - clientName
+    - password
+    + run()
+    + validateAuthentication( SBPmessage )
+    + removeServerClientHandler()
+    + closeEverything( socket,  dataWriter,  dataReader )
+}
+class ClientHandler <<Comms beetwen clients>>{
+    - socket
+    - clientHandlers
+    - dataWriter
+    - dataReader
+    - clientName
+    + run()
+    + broadcastMessage( message )
+    + removeClientHandler()
+    + closeEverything( socket,  dataWriter,  dataReader )
+}
+
+
+SharedBoardApp -right- SBPMessage : follows protocol of
+SharedBoardApp --left- SharedBoardServer : connects
+SharedBoardServer --- ServerClientHandler : has
+ServerClientHandler -right- SBPMessage : follows protocol of
+ServerClientHandler --- SharedBoardApp : chats server
+ServerClientHandler --- ClientHandler : when user auths
+ClientHandler --- SharedBoardApp : chats other users
+
+
+
+@enduml

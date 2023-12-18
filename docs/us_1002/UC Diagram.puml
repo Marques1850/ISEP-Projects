@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+actor Manager
+usecase "Create courses" as UC1
+Manager --> UC1
+@enduml

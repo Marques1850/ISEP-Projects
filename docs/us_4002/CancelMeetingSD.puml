@@ -1,0 +1,74 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+
+actor eCourseSystemUser as Actor
+participant CancelMeetingUI as UI <<presentation>>
+participant ManageMeetingController as Controller <<application>>
+participant AuthenticationService as AUTH <<service>>
+participant CancelMeetingService as SRV <<service>>
+
+participant Meeting as MET
+database MeetingRepository as Repository2 <<repository>>
+database MeetingInviteRepository as Repository3 <<repository>>
+
+
+
+Actor --> UI: cancel meeting option
+activate UI
+UI -> Controller: create
+UI -> Controller: getAllUserMeetings()
+    activate Controller
+    Controller -> AUTH: session()
+        activate AUTH
+        AUTH --> Controller: email
+        deactivate AUTH
+
+    Controller ->Repository2: getAllMeetingsWithOwner( email )
+        activate Repository2
+        Repository2 --> Controller: List<Meeting>
+        deactivate Repository2
+    Controller --> UI: List<Meeting>
+    deactivate Controller
+    UI --> UI : displayMeetings( List<Meeting>)
+UI --> Actor: shows list of meetings
+deactivate UI
+Actor --> UI: selects meeting to be canceled
+
+
+activate UI
+UI -> Controller: cancelMeeting( meeting )
+    activate Controller
+    Controller -> SRV: cancelMeeting( meeting )
+        activate SRV
+        SRV -> MET : identity()
+            activate MET
+            MET --> SRV: meetingID
+            deactivate MET
+        SRV -> Repository3 : searchByMeetingID( meetingID )
+                        activate Repository3
+                        Repository3 --> SRV : List<MeetingInvite>
+                        deactivate Repository3
+
+        SRV -> Repository2: remove( meeting )
+            activate Repository2
+            deactivate Repository2
+
+
+
+        group loop : for each invite
+        SRV -> Repository3 : remove( invite )
+        activate Repository3
+        deactivate Repository3
+        end
+        SRV --> Controller: state
+        deactivate SRV
+    Controller -->UI: state
+    deactivate Controller
+
+UI-->Actor: Shows succes or failure
+deactivate UI
+@enduml

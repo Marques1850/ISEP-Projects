@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+skinparam packageStyle rectangle
+actor User
+rectangle "Board" {
+  User -- (Update post-it)
+  (Update post-it) .> (Update board) : include
+  (Update board) .> (Synchronize board) : include
+  (Synchronize board) .> (Resolve conflicts) : include
+  (Resolve conflicts) .> (Notify users) : include
+}
+
+@enduml

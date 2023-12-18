@@ -1,0 +1,120 @@
+@startuml
+
+top to bottom direction
+
+class ViewBoardChangesUI {
+    + buildBoardMenu(List<SharedBoardDto>)
+    + ShowBoard(List<SharedBoardDto>)
+
+}
+
+class ViewBoardChangesController {
+     -board
+     -userRepository
+     -BoardChangesRepository
+     -BoardRepository
+
+    + getBoards(): List<SharedBoardDto>
+    + getBoard( boardId): SharedBoardDto
+    + getBoardChanges(): List<BoardChangesDto>
+    +findBoardsOfUser(email,userRepository,BoardRepository): List<SharedBoardDto>
+
+}
+
+
+class RepositoryFactory {
+
+}
+
+class ShareBoardRepsitory {
+    + findBoardsIOwn(): List<SharedBoard>
+    + findBoardsShared(): List<SharedBoard>
+    + saveShareBoard(boardId, postItId)
+}
+class BoardChangesRepsitory {
+    +  findByBoard( board): List<SharedBoard>
+    + findByDate( date): List<SharedBoard>
+}
+class ShareBoardRepsitory {
+    + findBoardsIOwn(): List<SharedBoard>
+    + findBoardsShared(): List<SharedBoard>
+    + saveShareBoard(boardId, postItId)
+}
+
+
+class SystemUser <<root>> <<Entity>> {
+    * Name
+    * Username
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+
+}
+
+class EmailAdderss <<Value object>>
+
+class Role <<Entity>> {
+    * String name
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+class Password <<value object>>
+
+class Acronym <<value object>>
+
+class NIF <<value object>>
+
+class BirthDate <<value object>>
+
+class MechanographicNumber <<value object>> <<automatically generated>>
+
+class Grade <<value object>>
+
+class BoardChanges  {
+      * id;
+      * boardChanged;
+      * date;
+      * BoardChanges;
+}
+
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+eCourseSystemUser --> "*" SharedBoard : owns >
+eCourseSystemUser --> "*" SharedBoard : shared to <
+
+SharedBoard "1" -- "1..20" RowCell : has >
+SharedBoard "1" -- "1..10" ColumnCell : has >
+SharedBoard "1" -- "1..*" NormalCell : has >
+
+NormalCell --|> Cell
+ColumnCell --|> Cell
+RowCell --|> Cell
+
+
+
+eCourseSystemUser .. ViewBoardChangesUI
+ViewBoardChangesUI .. ViewBoardChangesController
+
+ViewBoardChangesController .. ShareBoardRepsitory
+ViewBoardChangesController.. RepositoryFactory
+ViewBoardChangesController .. BoardChangesRepsitory
+
+
+
+
+@enduml

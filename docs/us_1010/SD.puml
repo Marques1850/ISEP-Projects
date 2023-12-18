@@ -1,0 +1,116 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rect
+
+
+actor Teacher as Actor
+
+participant "ScheduleClassUI" as UI <<presentation>>
+participant "ScheduleClassController" as Controller <<application>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant "ScheduleClassService" as SERVICE <<service>>
+'participant "Manager" as Manager
+
+database "ClassRepository" as Repository <<repository>>
+
+activate Actor
+Actor --> UI : Starts calss scheduling procedure
+activate UI
+
+UI --> Actor: Requests for class data (title, date, duration)
+Actor --> UI: Provides Class data
+
+UI -> Controller: create
+activate Controller
+deactivate Controller
+
+UI -> Controller: createClassSchedule()
+activate Controller
+
+Controller -> AUTHZ: session()
+activate AUTHZ
+AUTHZ --> Controller: session
+deactivate AUTHZ
+
+Controller -> USS: authenticatedUser()
+activate USS
+USS --> Controller: user
+deactivate USS
+
+Controller -> SERVICE: create
+activate SERVICE
+deactivate SERVICE
+Controller -> SERVICE: createClassSchedule()
+activate SERVICE
+
+SERVICE -> Repository: getAllScheduledClasses()
+activate Repository
+Repository --> SERVICE: List<Class>
+deactivate Repository
+loop loop through the verification process for each class data input
+SERVICE -> SERVICE: checkCoincidentialClasses(List<Class>)
+SERVICE -> SERVICE: checkTeacherAvailability(Teacher)
+alt if coincidential classes
+
+SERVICE --> Controller: errorCoincidentialClass()
+deactivate SERVICE
+Controller --> UI: errorCoincidentialClass()
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Show error message (coincidential classes)
+UI --> Actor: Request new class data (title, date, duration)
+deactivate
+Actor --> UI: Provides Class data
+Activate UI
+
+UI -> Controller: createClassSchedule()
+activate Controller
+
+Controller -> SERVICE: createClassSchedule()
+activate SERVICE
+end
+
+SERVICE -> SERVICE: checkOverlappingClasses(List<Class>)
+alt if participant has overlapping classes
+SERVICE --> Controller: warnOverlappingClass()
+deactivate SERVICE
+Controller --> UI: warnOverlappingClass()
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Show warning message (overlapping classes)
+UI --> Actor: Ask for confirmation to schedule class or input new class information
+deactivate UI
+
+alt if teacher ignores warning
+Actor --> UI: Ignores warning
+Activate UI
+UI -> Controller: createClassSchedule()
+activate Controller
+Controller -> SERVICE: createClassSchedule()
+activate SERVICE
+
+else if teacher inputs new class information
+Actor --> UI: Inputs new class information
+UI -> Controller: createClassSchedule()
+Controller -> SERVICE: createClassSchedule()
+end
+end
+end
+
+SERVICE -> Repository: Class
+activate Repository
+Repository -> Repository: save(Class)
+Repository --> SERVICE: state
+deactivate Repository
+SERVICE --> Controller: state
+deactivate SERVICE
+
+Controller --> UI: state
+deactivate Controller
+UI -> UI: display()
+UI --> Actor: Shows state of execution (Success or Failure)
+deactivate UI
+
+@enduml

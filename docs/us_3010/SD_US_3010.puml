@@ -1,0 +1,84 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as Usr
+
+participant ":ArchiveBoardUI" as UI
+participant ":ArchiveBoardController" as Con
+participant ":ShareBoardServer" as SBS
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+database ShareBoardRepsitory as SBR <<repository>>
+database "UserRepository" as URR <<repository>>
+participant ":ShareBoard" as SB
+
+
+Usr -> UI : Starts archiving a Board
+activate Usr
+activate UI
+UI->SBS : shareBoard()
+activate SBS
+SBS->SBS:ShareBoardController.getInstance()
+SBS-->UI : ShareBoardController
+deactivate SBS
+
+UI-> Con: getUserBoards()
+activate Con
+
+Con->AUTHZ : session()
+ activate AUTHZ
+ AUTHZ --> Con: session
+ deactivate AUTHZ
+
+ Con -> USS: authenticatedUser()
+ activate USS
+ USS --> Con: user
+ deactivate USS
+ Con->URR:searchUser(user.email)
+ activate URR
+ URR-->Con: euser
+ deactivate URR
+
+Con -> SBR : getallOwned()
+activate SBR
+
+SBR --> Con : sharedBoards
+
+deactivate SBR
+
+Con --> UI : boardsDTO
+deactivate Con
+
+
+
+UI--> Usr : shows the boards to select
+deactivate UI
+
+Usr -> UI : selects a board
+activate UI
+
+UI -> Con: ArchiveBoard(boardId)
+activate Con
+Con -> SBR : board =findbyCode(boardId)
+activate SBR
+SBR -> Con : board
+deactivate SBR
+Con->SB:archive()
+activate SB
+SB->SB:archive()
+SB-->Con:confirmation
+deactivate SB
+Con->SBR:save(board)
+activate SBR
+SBR->SBR:save(board)
+SBR-->Con:confirmation
+deactivate SBR
+Con-->UI:confirmation
+deactivate Con
+UI-->Usr:confirmation
+deactivate UI
+
+
+@enduml

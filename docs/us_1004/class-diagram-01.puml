@@ -1,0 +1,79 @@
+@startuml
+
+
+class SystemUser {
+    * String fullName
+    * String shortName
+    * Role role
+    * Email email
+    * Password password
+    * UserStatus status
+    + SystemUser(String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+class Manager {
+    * name
+    + Manager(String: name, String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+}
+
+
+class CourseRepository {
+    + addCourse(Course: Course)
+    + removeCourse(Course: Course)
+    + findall(): List<Course>
+    +findAllOpen() : List<Course>
+    +findAllClosed(): List<Course>
+    +findbyId(int: id): Course
+}
+
+
+class closeCourseUI{
+    + getopenCourses(): List<CourseDTO>º
+
+}
+class openCourseUI{
+    + getclosedCourses(): List<CourseDTO>
+}
+
+class closeCourseController{
+getopenCourses(): List<Course>
+}
+
+class openCourseController{
+getclosedCourses(): List<Course>
+}
+
+class Course {
+    * int id
+    * name
+    * CourseStatus status
+    * Code code
+    * Teacher regent
+    + Course(int id, String name, CourseStatus status, Code code, Teacher regent)
+    + closecourse()
+}
+
+
+
+
+'Relationships
+
+SystemUser -- Password
+SystemUser -right- Email
+SystemUser -right- Role
+SystemUser -right- UserStatus
+
+SystemUser -left-|> Manager
+Manager .. closeCourseUI
+closeCourseUI .. closeCourseController
+closeCourseController .. CourseRepository
+closeCourseController .. Course
+Manager .. openCourseUI
+openCourseUI .. openCourseController
+openCourseController .. CourseRepository
+openCourseController .. Course
+
+
+
+@enduml

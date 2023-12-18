@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+top to bottom direction
+
+
+
+class ChangePostItController {
+    + getUserBoards(): List<SharedBoard>
+    + getBoard(boardId): SharedBoard
+    + changePostIt(): postIt
+    + saveShareBoard(boardId, postItId)
+}
+
+interface BoardRepository {
+    + findByCode( boardid )
+}
+interface BoardChangesRepository {
+    + getBoardPreviousContent( Board )
+}
+interface EventPublisher {
+    + publish( event )
+}
+class BoardChangedEvent{
+}
+
+class BoardChanges{
+    * id
+    * date
+    * BoardChanges
+    * content
+}
+class Board <<root>> <<entity>> {
+    * id <<unique>> <<automatically generated>>
+    * boardName
+    * maxRows
+    * maxColumns
+    + updateCell(content, row, column)
+}
+
+class PostIt{
+    * id
+    * title
+    * content
+    * color
+    * position
+}
+
+class Content{
+    + updatePostItContent( content )
+}
+
+
+
+class eCourseSystemUser <<root>> <<Entity>> {
+}
+class UndoLastChangePostItController{
+    + undoLastChangePostIt( boardId, row, column)
+}
+class UndoLastChangePostItService{
+    + undoLastChangePostIt( boardId, row, column, sessionEmail)
+    + undoLastChangePostItSync( boardId, row, column)
+}
+
+
+
+eCourseSystemUser --> "*" Board : owns >
+eCourseSystemUser --> "*" Board : shared to <
+Board --> "*" PostIt : has >
+
+eCourseSystemUser --> "*" PostIt : updates a >
+
+eCourseSystemUser --> "*" Content : updates a >
+
+eCourseSystemUser .. UndoLastChangePostItUI
+UndoLastChangePostItUI .. ChangePostItController
+UndoLastChangePostItUI .. UndoLastChangePostItController
+
+
+
+
+UndoLastChangePostItController .. UndoLastChangePostItService
+UndoLastChangePostItService .. BoardRepository
+UndoLastChangePostItService .. BoardChangesRepository
+UndoLastChangePostItService .. Board
+PostIt "1" .. "1" Content
+Board "1" .. "*" BoardChanges
+
+BoardChanges .. BoardChangesRepository: repo
+Board .. BoardRepository: repo
+BoardChangedEvent "1" .. "1" BoardChanges
+EventPublisher . BoardChangedEvent: publishes
+UndoLastChangePostItService .. BoardChangedEvent : creates
+UndoLastChangePostItService .. EventPublisher
+
+
+@enduml

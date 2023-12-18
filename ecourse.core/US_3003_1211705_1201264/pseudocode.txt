@@ -1,0 +1,47 @@
+Resources:
+
+	share_Board *shareboard // shared memory to store the board
+	sem_t *sem // semaphore to control access to the shared memory (initial value 1)
+
+Parent:
+
+	create the shared memory
+	initialize the board
+	create the semaphores
+	generate NUM_CLIENTS child processes
+	
+	wait for all child processes to finish
+
+	clean up resources (semaphore, shared memory)
+
+Childs:
+
+	down(sem) // wait for access to shared memory
+
+ 	randomly choose a row and column to write
+	if client_id % 9 == 0
+ 		read the board (call read_board function) 
+	else 
+		update the board with a random string (call update_board function)
+
+	up(sem) // release access to shared memory
+
+Function read_board:
+
+	print the whole board
+	sleep for 200 milisecond
+	print information about the read
+
+Function update_board:
+	
+	fill the board position with a random string of 1 or 2 words (call random_string function)
+	sleep for 200 milisecond
+	print information about the update
+
+Function random_string:
+
+	create a random string of n words
+	words are chosen randomly from a predefined list
+	words are separated by a '-' if there is more than one
+	fill the rest of the string with spaces to preserve board structure
+	copy the string to the board at the specified row and column

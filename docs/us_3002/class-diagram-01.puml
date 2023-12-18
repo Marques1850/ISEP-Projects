@@ -1,0 +1,45 @@
+@startuml
+
+
+class eCourseSystemUser <<root>> <<Entity>> {
+    * FullName
+    * MecanographicNumber
+    * ShortName
+}
+class CreateBoardUI  {
+    +display()
+}
+
+class CreateBoardController{
+    +createBoard()
+}
+
+interface BoardRepository{
+    +save()
+}
+
+interface eCourseUserRepository{
+    +searchUser()
+}
+
+class Board{
+    *boardName
+    *cellList
+    *maxRow
+    *maxColumn
+    *owner
+    *sharedUsers
+
+}
+
+
+eCourseSystemUser "1" -left- "*" user : is a <
+
+eCourseSystemUser ..CreateBoardUI : interacts
+CreateBoardUI -- CreateBoardController
+CreateBoardController -- BoardRepository
+CreateBoardController -- eCourseUserRepository
+CreateBoardController -- Board
+BoardRepository -- Board
+
+@enduml

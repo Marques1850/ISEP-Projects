@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor Student as stu
+
+participant ":ListFutureExamsUI" as UI
+participant ":ListFutureExamsController" as Con
+participant "ListExamService" as LE <<service>>
+participant "AuthorizationService" as AUTHZ
+participant "UserSession" as USS
+participant Student as STU
+participant ListExamCoursesService as LEC<<service>>
+database UserRepository as USR <<repository>>
+database ExamRepository as EXR <<repository>>
+
+stu -> UI : Starts asking to list future exams
+activate stu
+activate UI
+
+UI-> Con : getFutureExams()
+activate Con
+
+
+Con->AUTHZ : session()
+ activate AUTHZ
+ AUTHZ --> Con: session
+ deactivate AUTHZ
+
+ Con -> USS: authenticatedUser()
+ activate USS
+ USS --> Con: user
+ deactivate USS
+ Con -> LE: getFutureExams(user)
+activate LE
+LE->USR: findStudent(user)
+activate USR
+USR->USR:searchUser(email)
+USR-->LE: student
+deactivate USR
+LE->STU: getStudentCourses()
+activate STU
+STU-->LE: List<Course>courses
+deactivate STU
+LE-->LEC: getFutureExams(courses)
+activate LEC
+loop for each course
+
+LEC-->EXR: findAllofCourse(course)
+activate EXR
+end loop
+EXR-->LEC: List<Exam>Exams
+deactivate EXR
+LEC-->LEC: filterPastExams(Exams)
+LEC-->LE: List<Exam>futureExams
+deactivate LEC
+LE-->Con: List<Exam>futureExams
+deactivate LE
+Con-->UI: List<ExamDTO>futureExams
+deactivate Con
+UI-->stu: List<ExamDTO>futureExams
+deactivate UI
+deactivate stu
+
+@enduml

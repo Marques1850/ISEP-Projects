@@ -1,0 +1,103 @@
+@startuml
+
+
+class eCourseSystemUser {
+    * String fullName
+    * String shortName
+    * Role role
+    * Email email
+    * Password password
+    * UserStatus status
+    * List<Course> coursesTeached
+    * List<Course> coursesTeaching
+    * NIF nif
+    * Acronym acronym
+    + eCourseSystemUser(String: fullName, String: shortName, Role: role, \n Email: email, Password, password, boolean: status)
+    + AlterUserStatus(boolean: status)
+}
+
+
+
+
+
+class userRepository {
+    + adduser(user: user)
+    + removeuser(user: user)
+    + searchuser(user: user): user
+    + alteruserStatus(user: user)
+    + totalNumberOfusers(): int
+    + listSystemusers(): List<user>
+    +getopenusers() : List<user>
+    +getclosedusers() : List<user>
+}
+
+class ExamRepository {
+    + addExam(Exam: Exam)
+    + removeExam(Exam: Exam)
+    + searchExam(Exam: Exam): Exam
+    + totalNumberOfExams(): int
+}
+
+
+class ListFutureExamsUI{
+    + getFutureExams() : List<ExamDTO>
+
+}
+
+class ListFutureExamsController{
+ + getFutureExams(user) : List<Exam>
+}
+
+class ListExamService {
+   + findStudent(user: user)
+   +getStudentCourses() : List<Course>
+   +getExamCourses() : List<Course>
+}
+
+class ListExamCoursesService {
+    +findFutureExamsByCourses() : List<Exam>
+}
+
+class AuthorizationService {
+    *Logger logger
+    *UserSession Session
+    + createSessionForUser()
+    + clearSession()
+    + hasSession()
+    + session()
+    + isAuthenticatedUserAuthorizedTo()
+    + ensureAuthenticatedUserHasAnyOf()
+    + loggedinUserWithPermissions()
+}
+
+class UserSession {
+    *User authenticatedUser
+    *UUID token
+    *Calendar startedOn
+    + UserSession(user: user)
+    + authenticatedUser()
+    + token()
+    + startedOn()
+}
+
+
+
+'Relationships
+
+eCourseSystemUser -- Password
+eCourseSystemUser -right- Email
+eCourseSystemUser -right- Role
+eCourseSystemUser -right- UserStatus
+
+
+
+eCourseSystemUser .. ListFutureExamsUI:"As a user"
+ListFutureExamsUI .. ListFutureExamsController
+ListExamService .. userRepository
+ListFutureExamsController .. AuthorizationService
+ListFutureExamsController .. UserSession
+ListFutureExamsController .. ListExamService
+ListExamService .. eCourseSystemUser
+
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor User as Usr
+
+participant ":ChangePostItUI" as UI
+participant ":ShareBoardServer" as SBS <<server>>
+participant ":ChangePostItController" as Con
+participant "ChangePostItService" as S <<service>>
+participant ":UserAccessBoardsService" as UABS <<service>>
+database RepositoryFactory as FAR <<repository>>
+database ShareBoardRepository as Us <<repository>>
+participant "board:\nBoard" as board
+participant "boardChanges:\nBoardChanges" as boardChanges
+participant "boardChangedEvent:\nBoardChangedEvent" as boardChangedEvent
+participant "domainEvent:\nDomainEvent" as domainEvent
+participant "publisher:\nEventPublisher" as publisher
+participant ":PostItMapper" as PIM <<mapper>>
+
+
+
+Usr -> UI : Starts creating a Post-It
+activate Usr
+activate UI
+
+UI -> SBS : createPostIt()
+activate SBS
+SBS -> SBS : getInstace()
+SBS --> UI : CreatePostItController()
+deactivate SBS
+
+UI-> Con: getUserBoards()
+activate Con
+
+Con -> UABS : getUserBoards()
+
+activate UABS
+UABS -> Us : findBoardsOfUser(sessionEmail, theRepository, theUserRepository)
+activate Us
+Us -> Us : findBoeardsHiOwn()
+Us --> UABS : onwendBoards
+
+
+Us -> Us : findBoeardsHiShared()
+Us --> UABS : sharedBoards
+deactivate Us
+
+UABS-->Con: boards
+deactivate UABS
+
+Con --> UI : boards
+deactivate Con
+
+
+
+UI--> Usr : print the boards that the user owns and/or the ones that he shares
+deactivate UI
+
+
+Usr -> UI : selects a board
+activate UI
+UI --> Usr : asks for the row,column, and Content of the Post-It to be changed
+deactivate UI
+Usr -> UI: enters the row,column, and Content of the Post-It to be changed
+activate UI
+
+UI-> Con: changePostIt(postItRow, postItColumn, postItContent, selectedBoard)
+     activate Con
+        Con->S:changePostIt(postItRow, postItColumn, postItContent, selectedBoard,sessionEmail)
+        activate S
+     S->board**:updateCell(postItRow, postItColumn, postItContent)
+     S->boardChanges**:new(board,LocalDateTime.now(),"PostIt in pos [" + postItRow + "\n," + postItColumn + "]: content changed to \'"+postItContent+"\' by "+sessionEmail+"\n",postItContent)
+     S->boardChangedEvent**:new(boardChanges)
+     S->domainEvent**:event=boardChangedEvent
+     S->publisher**:publish(event)
+     S -> PIM: toDTO(postIt)
+     activate PIM
+     PIM --> S: postItDTO
+        deactivate PIM
+     S-->Con: postItDTO
+     deactivate S
+        deactivate Con
+        deactivate SBS
+
+UI-->Usr: Post-It updated successfully!
+deactivate UI
+
+
+@enduml

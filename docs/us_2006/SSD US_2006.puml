@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Teacher
+
+activate Teacher
+
+Teacher -> ":System": asks to see a list of exam grades os his courese
+
+activate ":System"
+":System" --> Teacher: shows a list of exam grades of his course
+deactivate ":System"
+
+deactivate Teacher
+
+@enduml

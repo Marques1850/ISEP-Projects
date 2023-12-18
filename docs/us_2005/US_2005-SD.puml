@@ -1,0 +1,77 @@
+@startuml
+'https://plantuml.com/skinparam
+skinparam monochrome true
+skinparam packageStyle rect
+
+actor Student as Actor
+participant ListGradesStudentsUI as UI <<presentation>>
+participant ListGradesStudentsController as Controller <<application>>
+participant AuthorizationService as Authz <<application>>
+participant UserSession as USS <<application>>
+participant eCourseUserRepository as UserRepo <<repository>>
+participant "user:\nEcourseSystemUser" as user
+participant ExamRepository as ExamRepo <<repository>>
+participant "examsIn:\nList<Exam>" as ExamList
+participant ListGradesStudentsService as Service <<service>>
+participant "exam:\nExam" as Exam
+participant "optGrades:\nOptional<List<ExamGrade>>" as ExamG
+participant ExamMapper as ExamMapper <<mapper>>
+participant GradeMapper as GradeMapper <<mapper>>
+participant "gradesMap:\nHashMap<Exam, ExamGrade>" as GradeMap
+
+
+
+Actor -> UI: Requests to view List of Grade
+activate UI
+
+UI -> Controller: listGradesStudent()
+activate Controller
+Controller -> Authz: session()
+    activate Authz
+    Authz --> Controller: Session
+    deactivate Authz
+    Controller -> USS: email()
+    activate USS
+    USS --> Controller: email
+    deactivate USS
+    Controller -> UserRepo: searchUser(email)
+    activate UserRepo
+    UserRepo --> Controller: User
+    deactivate UserRepo
+    Controller -> user**:courseIn= coursesLearning()
+    Controller -> Controller: examsIn
+    loop for each course in courseIn
+    Controller->ExamRepo:findAllOfCourse(course)
+    activate ExamRepo
+    ExamRepo-->Controller:exams
+    deactivate ExamRepo
+    Controller->ExamList**:addAll(examsIn)
+    end
+    Controller->Service:ListGradesStudent(user,examsIn)
+    activate Service
+    loop for each exam in examsIn
+    Service->Exam**:optgrades=gradeByStudent(user)
+    ALT grades != null
+    Service-> ExamG**: grades=get()
+    Service->ExamMapper:toDto(exam)
+    activate ExamMapper
+    ExamMapper-->Service:examDto
+    deactivate ExamMapper
+    Service->GradeMapper:toDto(grades)
+    activate GradeMapper
+    GradeMapper-->Service:gradesDto
+    deactivate GradeMapper
+    Service->GradeMap**:put(examDto, gradesDto)
+    end
+    end
+    Service-->Controller:gradesMap
+    deactivate Service
+    Controller-->UI:gradesMap
+    deactivate Controller
+    UI->UI: showGrades(gradesMap)
+    UI->Actor: shows Grades
+    deactivate UI
+
+
+
+@enduml

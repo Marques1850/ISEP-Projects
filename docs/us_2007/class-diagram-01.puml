@@ -1,0 +1,138 @@
+@startuml
+
+class SystemUser <<root>> <<Entity>> {
+    * Name
+    * Username
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+
+}
+
+class EmailAdderss <<Value object>>
+
+class Role <<Entity>> {
+    * String name
+}
+
+class UserStatus <<enum>> {
+    + ENABLE
+    + DISABLE
+}
+
+class Password <<value object>>
+
+class Acronym <<value object>>
+
+class NIF <<value object>>
+
+class BirthDate <<value object>>
+
+class MechanographicNumber <<value object>> <<automatically generated>>
+
+class Grade <<value object>>
+
+class Question <<root>> <<event>> {
+    * id <<unique>>
+    * content
+}
+
+class QuestionType <<enum>>
+
+
+class VerifQuestionService <<service>> {
+    + VerifyQuestionService()
+    + verify(QuestionType type, String ficheiro)
+    + verifyNumerical(String ficheiro)
+    + verifyMatching(String ficheiro)
+    + verifyMissingWord(String ficheiro)
+    + verifyShortAnswer(String ficheiro)
+    + verifyTrueOrFalse(String ficheiro)
+    + verifyMultipleChoice(String ficheiro)
+}
+
+class CreateQuestionUI {
+    * CreateQuestionController theController
+    + doShow() : boolean
+    + headline() : String
+    + showTypeQuestions(final List<QuestionType> perms) : QuestionType
+}
+
+class CreateQuestionController {
+    * QuestionRepository
+    * VerifyQuestionService
+    + verifyQuestion(QuestionType type, String fileName)
+    + createQuestion(QuestionType type, String fileName) : QuestionDto
+}
+
+class RepositoryFactory {
+}
+
+class ExamLexer {
+}
+
+class ExamParser {
+}
+
+class ExamReadFile {
+    + FileToString(String path) : List<String>
+}
+
+class QuestionRepository {
+    + findbytype(QuestionType type) : List<Question>
+    + save(question) : Question
+}
+
+class QuestionDto {
+    * String content
+    * String type
+    + QuestionDto(String content, String type)
+    + toDto(question) : QuestionDto
+    + getContent() : String
+    + getType() : String
+    + toString() : String
+}
+
+
+
+
+'Relationships
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+
+eCourseSystemUser --> VerifQuestionService : uses >
+
+eCourseSystemUser "*" - "*" Question : creates/updates >
+
+eCourseSystemUser "*" - "*" QuestionType : choose >
+
+
+Question "*" - "1" QuestionType : has >
+
+
+eCourseSystemUser --> CreateQuestionUI : uses >
+CreateQuestionUI .. QuestionType
+CreateExamUI .. QuestionType
+CreateQuestionUI .. CreateQuestionController
+CreateQuestionController .. RepositoryFactory
+CreateQuestionController .. QuestionRepository
+CreateQuestionController .. VerifyQuestionService
+CreateQuestionController .. Question
+CreateQuestionController .. QuestionDto
+CreateQuestionController .. ExamReadFile
+VerifyQuestionService .. ExamLexer
+VerifyQuestionService .. ExamParser
+
+
+@enduml

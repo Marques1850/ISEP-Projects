@@ -1,0 +1,59 @@
+@startuml
+
+class Student <<root>> <<entity>> {
+* name
+}
+
+class eCourseSystemUser <<root>> <<Entity>> {
+    * FullName
+    * MecanographicNumber
+    * ShortName
+}
+
+class RequestStudentEnrollUI{
+    +listCoursesEnrollmentOpen()
+    +display()
+}
+
+class RequestEnrollStudentController{
+    +listCoursesEnrollmentOpen()
+    +requestEnrollStudent()
+}
+
+class RequestEnrollStudentService{
+    +requestEnrollStudent()
+}
+
+interface CourseRepository{
+    +findByCode()
+    +findAllWithStatus
+}
+interface EnrollmentRepository{
+    +save()
+}
+
+class Enroll <<root>> <<entity>> {
+    * id
+    * student
+    * course
+}
+
+enum EnrollStatus{
+    OPEN
+    CLOSED
+    APPROVED
+    REJECTED
+}
+
+eCourseSystemUser "1" -left- "*" Student : is a <
+eCourseSystemUser -- Enroll
+
+eCourseSystemUser .. RequestStudentEnrollUI : interacts
+RequestStudentEnrollUI -- RequestEnrollStudentController
+RequestEnrollStudentController -- RequestEnrollStudentService
+RequestEnrollStudentController -- CourseRepository
+RequestEnrollStudentService -- EnrollmentRepository
+EnrollmentRepository -- Enroll : repo
+Enroll -- EnrollStatus : has
+
+@enduml

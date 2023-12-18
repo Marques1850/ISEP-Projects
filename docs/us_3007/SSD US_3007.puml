@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+activate User
+
+User -> ":System": asks to update a Post-It in a Share board
+
+activate ":System"
+":System" -> User: show boards that the user owns or \n boards that are shared with the user
+deactivate ":System"
+
+User -> ":System": types the post-it information
+
+activate ":System"
+":System" -> User: print the post-it information and asks for confirmation
+deactivate ":System"
+
+User -> ":System": confirms the post-it update
+
+activate ":System"
+":System" -> User: Informs that the post-it has been updated successfully
+deactivate ":System"
+
+deactivate User
+
+@enduml

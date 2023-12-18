@@ -1,0 +1,123 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+package "ECOURSESYSTEMUSER" <<Aggregate>> {
+
+    class SystemUser <<root>> <<Entity>> {
+        * Name
+        * Username
+    }
+
+    class eCourseSystemUser <<root>> <<Entity>> {
+
+    }
+
+    class EmailAdderss <<Value object>>
+
+    class Role <<Entity>> {
+        * String name
+    }
+
+    class UserStatus <<enum>> {
+        + ENABLE
+        + DISABLE
+    }
+
+    class Password <<value object>>
+
+    class Acronym <<value object>>
+
+    class NIF <<value object>>
+
+    class BirthDate <<value object>>
+
+    class MechanographicNumber <<value object>> <<automatically generated>>
+
+    class Grade <<value object>>
+
+}
+
+
+package "SHAREBOARD" <<aggregate>> {
+    class Board <<root>> <<entity>> {
+        * id <<unique>> <<automatically generated>>
+        * boradName
+        * maxRows
+        * maxColumns
+    }
+
+    class Cell <<entity>> {
+        * id
+        * content
+    }
+
+    class ColumnCell <<entity>> {
+        * id
+        * columnTittle
+        * column
+    }
+
+    class RowCell <<entity>> {
+        * id
+        * rowTittle
+        * row
+    }
+}
+
+package "Post-It" <<agreggate>> {
+
+    class PostIt <<root>> <<entity>> {
+        * id
+        * row
+        * column
+        * content
+        * ownUser
+    }
+
+    class Content <<value object>> {
+        * content
+    }
+}
+
+class CreatePostItService <<service>> {
+}
+
+
+
+'Relationships
+
+SystemUser --> "1" EmailAdderss
+SystemUser --> "1" Password
+SystemUser --> "1" Role
+
+eCourseSystemUser --> "1" SystemUser
+eCourseSystemUser --> "1" Role
+eCourseSystemUser --> "1" UserStatus
+eCourseSystemUser --> "1" Acronym
+eCourseSystemUser --> "1" NIF
+eCourseSystemUser --> "1" BirthDate
+eCourseSystemUser --> "1" MechanographicNumber
+eCourseSystemUser --> "1" Grade : student has a >
+eCourseSystemUser --> "*" SharedBoard : owns >
+eCourseSystemUser --> "*" SharedBoard : shared to <
+eCourseSystemUser --> "*" PostIt : creates a >
+eCourseSystemUser --> "*" PostIt : updates a >
+eCourseSystemUser --> "*" PostIt : deletes a >
+eCourseSystemUser --> "*" Content : creates a >
+eCourseSystemUser --> "*" Content : updates a >
+eCourseSystemUser --> "*" Content : deletes a >
+
+eCourseSystemUser --> "*" CreatePostItService : use >
+
+Board "1" -- "1..20" RowCell : has >
+Board "1" -- "1..10" ColumnCell : has >
+Board "1" -- "*" PostIt : has >
+
+ColumnCell --|> Cell
+RowCell --|> Cell
+
+PostIt "*" -- "*" Content : contains >
+PostIt "*" -- "*" eCourseSystemUser : owns <
+
+@enduml

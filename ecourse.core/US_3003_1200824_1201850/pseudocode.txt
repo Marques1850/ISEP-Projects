@@ -1,0 +1,77 @@
+Constants:
+  NUM_CLIENTS = 150
+  BOARD_ROWS = 20
+  BOARD_COLS = 10
+
+Structure:
+  shareBoard:
+    board: integer 2D array[20][10]
+    row: integer
+    column: integer
+
+Functions:
+  getRandomInt():
+    Return a random integer between 1 and 15000
+
+  populateBoard(board):
+    Set all elements of the board to 0
+
+  accessBoard(board, row, column):
+    Print the board
+    Print information about the access
+
+  updateBoard(index, board, row, column):
+    Set the board position [row][column] to a random integer
+    Print information about the update
+
+Main:
+  Create shared memory:
+    shm_fd = create_shared_memory("/shm", sizeof(shareBoard))
+    sBoard = attach_shared_memory(shm_fd)
+
+  Initialize board:
+    populateBoard(sBoard->board)
+    sBoard->row = 0
+    sBoard->column = 0
+
+  Create semaphore:
+    sem = create_semaphore("/sem", 1)
+
+  Generate child processes:
+    for i in range(NUM_CLIENTS):
+      pid = fork()
+      
+      if pid == -1:
+        Print "Error creating child process"
+        Exit with error
+      else if pid == 0:
+        # Child process
+        Wait for semaphore:
+          wait(sem)
+
+        Randomly choose row and column:
+          row = getRandomInt() % BOARD_ROWS
+          column = getRandomInt() % BOARD_COLS
+
+        if i % 5 == 0:
+          Access the board:
+            accessBoard(sBoard->board, sBoard->row, sBoard->column)
+        else:
+          Update the board:
+            updateBoard(i, sBoard->board, sBoard->row, sBoard->column)
+
+        Release semaphore:
+          signal(sem)
+
+        Exit child process
+
+  Wait for all child processes to finish:
+    for i in range(NUM_CLIENTS):
+      wait(NULL)
+
+  Clean up resources:
+    detach_shared_memory(sBoard)
+    remove_shared_memory("/shm")
+    remove_semaphore("/sem")
+
+  Exit the parent process
