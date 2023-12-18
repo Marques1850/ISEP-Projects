@@ -15,31 +15,3 @@ using a minimum viable product (MVP) approach.*
 how the company will evaluate the viability of the project as a possible commercial solution.*
 
 *The company set the duration of this MVP project as 3 months.*
-
-## 2. Planning and Technical Documentation
-
-[Planning and Technical Documentation](docs/readme.md)
-
-## 3. How to Build
-
-*To Do*
-
-## 4. How to Execute Tests
-
-*To Do*
-
-## 5. How to Run
-
-*To Do*
-
-## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
-
-*To Do*
-
-## 7. How to Generate PlantUML Diagrams
-
-To generate plantuml diagrams for documentation execute the script (for the moment, only for linux/unix/macos):
-
-    ./generate-plantuml-diagrams.sh
-
-
