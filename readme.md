@@ -1,4 +1,3 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10488735&assignment_repo_type=AssignmentRepo)
 # Project eCourse
 
 ## 1. Description of the Project
@@ -15,3 +14,10 @@ using a minimum viable product (MVP) approach.*
 how the company will evaluate the viability of the project as a possible commercial solution.*
 
 *The company set the duration of this MVP project as 3 months.*
+
+## Team Members
+- 1211705 - **Sérgio Marques**
+- 1211702 - **Pedro Alves**
+- 1201264- **Francisco Gouveia**
+- 1200824 - **Leonardo Miranda**
+- 1201850 - **Francisco Marques**
